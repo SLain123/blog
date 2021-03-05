@@ -1,0 +1,41 @@
+$active-btn: #52c41a;
+
+.header {
+  background-color: #fff;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 22px;
+}
+
+.logo {
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+  text-decoration: none;
+  padding: 10px 10px 10px 0;
+}
+
+.authBtn {
+  padding: 15px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+  opacity: .95;
+
+  &_active {
+    border: 1px solid $active-btn;
+    border-radius: 5px;
+    color: $active-btn;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:first-child {
+    margin-right: 19px;
+  }
+}
