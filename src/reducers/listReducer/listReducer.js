@@ -10,7 +10,7 @@ const listReducer = (state = initState, action) => {
     case 'CHANGE_PAGE': {
       return { ...state, page: action.page, onLoad: true };
     }
-    case 'FAIL_DOWNLOAD': {
+    case 'FAIL_DOWNLOAD_LIST': {
       return { ...state, onLoad: false, onFail: action.error };
     }
     default:

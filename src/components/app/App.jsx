@@ -20,7 +20,7 @@ const App = () => {
     setTimeout(() => {
       getArticleListService(page)
         .then((data) => dispatch(getArticles(data)))
-        .catch((error) => dispatch(failDownloadArticles(error)));
+        .catch((error) => dispatch(failDownloadArticles(error.message)));
     }, 1000);
   }, [dispatch, page]);
 
@@ -29,8 +29,8 @@ const App = () => {
       <Header />
       <Switch>
         <main className={classes.container}>
-          <Route path="/" component={ArticleList} />
-          <Route path="/?id" component={ArticlePage} />
+          <Route path="/" component={ArticleList} exact />
+          <Route path="/:id" component={ArticlePage} />
           {/* <Redirect to="/home" /> */}
         </main>
       </Switch>

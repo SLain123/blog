@@ -22,7 +22,7 @@ const ArticleList = () => {
   }
 
   if (onFail) {
-    return <ErrorMessage error={onFail} />;
+    return <ErrorMessage errorMessage={onFail} />;
   }
 
   return (
