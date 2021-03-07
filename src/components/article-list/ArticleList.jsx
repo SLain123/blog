@@ -1,52 +1,43 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Pagination } from 'antd';
+import { uniqueId } from 'lodash';
 import ArticleItem from '../article-item';
+import { changePage } from '../../reducers/listReducer/listActions';
+import Spinner from '../spinner';
+import ErrorMessage from '../error-message';
 
 import classes from './ArticleList.module.scss';
 
 const ArticleList = () => {
-  const [articles] = useState([
-    {
-      slug: 'how-to-train-your-dragon',
-      title: 'How to train your dragon',
-      description: 'Ever wonder how?',
-      body: 'It takes a Jacobian',
-      tagList: ['dragons', 'training'],
-      createdAt: '2016-02-18T03:22:56.637Z',
-      updatedAt: '2016-02-18T03:48:35.824Z',
-      favorited: false,
-      favoritesCount: 0,
-      author: {
-        username: 'jake',
-        bio: 'I work at statefarm',
-        image: 'https://i.stack.imgur.com/xHWG8.jpg',
-        following: false,
-      },
-    },
-    {
-      slug: 'how-to-train-your-dragon-2',
-      title: 'How to train your dragon 2',
-      description: 'So toothless',
-      body: 'It a dragon',
-      tagList: ['dragons', 'training'],
-      createdAt: '2016-02-18T03:22:56.637Z',
-      updatedAt: '2016-02-18T03:48:35.824Z',
-      favorited: false,
-      favoritesCount: 0,
-      author: {
-        username: 'jake',
-        bio: 'I work at statefarm',
-        image: 'https://i.stack.imgur.com/xHWG8.jpg',
-        following: false,
-      },
-    },
-  ]);
+  const dispatch = useDispatch();
+  const articles = useSelector((state) => state.list.articles);
+  const articlesCount = useSelector((state) => state.list.articlesCount);
+  const page = useSelector((state) => state.list.page);
+  const onLoad = useSelector((state) => state.list.onLoad);
+  const onFail = useSelector((state) => state.list.onFail);
+
+  if (onLoad) {
+    return <Spinner />;
+  }
+
+  if (onFail) {
+    return <ErrorMessage error={onFail} />;
+  }
 
   return (
     <ul className={classes.list}>
-      {articles.map((article) => {
-        const { createdAt, title } = article;
-        return <ArticleItem {...article} key={`${title}-${createdAt}`} />;
-      })}
+      {articles.map((article) => (
+        <ArticleItem {...article} key={uniqueId('art_')} />
+      ))}
+      <Pagination
+        size="small"
+        total={articlesCount}
+        current={page}
+        pageSize={5}
+        showSizeChanger={false}
+        onChange={(pageNum) => dispatch(changePage(pageNum))}
+      />
     </ul>
   );
 };

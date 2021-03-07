@@ -1,22 +1,23 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable react/self-closing-comp */
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import classes from './Header.module.scss';
 
 function Header() {
   return (
     <header className={classes.header}>
-      <a href="#" className={classes.logo}>
+      <Link to="/" className={classes.logo}>
         Realworld Blog
-      </a>
+      </Link>
       <div>
-        <a href="#" className={classes.authBtn}>
+        <Link to="/" className={classes.authBtn}>
           Sign In
-        </a>
-        <a href="#" className={`${classes.authBtn} ${classes.authBtn_active}`}>
+        </Link>
+        <Link to="/" className={`${classes.authBtn} ${classes.authBtn_active}`}>
           Sign Up
-        </a>
+        </Link>
       </div>
     </header>
   );

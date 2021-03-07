@@ -2,6 +2,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from 'react';
+import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
+import Tags from '../tags';
 
 import like from './like.svg';
 
@@ -19,27 +22,35 @@ const ArticleItem = ({
   tagList,
   updatedAt,
 }) => {
-  const { image, username } = author;
+  let { image, username } = author;
+
+  if (image === '' || image === null) {
+    image = 'https://static.productionready.io/images/smiley-cyrus.jpg';
+  }
+
+  if (image === '' || image === null) {
+    username = 'Anonymous';
+  }
 
   return (
     <li className={classes.item}>
       <div className={classes.header}>
         <div className={classes.headContainer}>
           <div className={classes.headInfo}>
-            <span className={classes.title}>{title}</span>
+            <Link to={`/${slug}`} className={classes.title}>
+              {title}
+            </Link>
             <div className={classes.like}>
               <img src={like} alt="like" width="16" height="15" className={classes.likePic} />
-              <span className={classes.likeCount}>12</span>
+              <span className={classes.likeCount}>{favoritesCount}</span>
             </div>
           </div>
-          <div className={classes.tags}>
-            <button className={classes.tagItem}>Tag1</button>
-          </div>
+          <Tags tags={tagList} />
         </div>
         <div className={classes.authorInfo}>
           <div className={classes.authorContainer}>
             <span className={classes.name}>{username}</span>
-            <span className={classes.date}>{createdAt}</span>
+            <span className={classes.date}>{format(new Date(createdAt), 'MMMM d, y')}</span>
           </div>
           <picture>
             <source srcSet={image} />
@@ -47,7 +58,7 @@ const ArticleItem = ({
           </picture>
         </div>
       </div>
-      <p className={classes.text}>{body}</p>
+      <p className={classes.description}>{description}</p>
     </li>
   );
 };

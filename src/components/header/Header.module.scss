@@ -7,6 +7,10 @@ $active-btn: #52c41a;
   justify-content: space-between;
   align-items: center;
   padding: 0 22px;
+
+  & a:hover {
+    color: rgba(0, 0, 0, 0.85);
+  }
 }
 
 .logo {
@@ -23,12 +27,16 @@ $active-btn: #52c41a;
   font-size: 18px;
   line-height: 28px;
   color: rgba(0, 0, 0, 0.85);
-  opacity: .95;
+  opacity: 0.95;
 
   &_active {
     border: 1px solid $active-btn;
     border-radius: 5px;
     color: $active-btn;
+
+    &:hover {
+      color: #51dd0a !important;
+    }
   }
 
   &:hover {

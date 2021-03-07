@@ -42,21 +42,6 @@
   color: #1890ff;
 }
 
-.tags {
-  margin: 6px 0;
-}
-
-.tagItem {
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  font-size: 12px;
-  line-height: 15px;
-  color: rgba(0, 0, 0, 0.5);
-  background-color: transparent;
-  border-radius: 2px;
-  padding: 2px 5px;
-  cursor: pointer;
-}
-
 .authorInfo {
   display: flex;
 }
@@ -70,6 +55,7 @@
   font-size: 18px;
   line-height: 28px;
   color: rgba(0, 0, 0, 0.85);
+  text-align: end;
 }
 
 .date {
@@ -82,9 +68,10 @@
   width: 46px;
   height: 46px;
   border-radius: 100%;
+  margin-left: 12px;
 }
 
-.text {
+.description {
   font-size: 12px;
   line-height: 22px;
   color: rgba(0, 0, 0, 0.75);
