@@ -8,6 +8,7 @@ import Spinner from '../spinner';
 import ErrorMessage from '../error-message';
 
 import classes from './ArticleList.module.scss';
+import './pagination.scss';
 
 const ArticleList = () => {
   const dispatch = useDispatch();

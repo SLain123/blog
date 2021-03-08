@@ -8,7 +8,7 @@ import classes from './Header.module.scss';
 function Header() {
   return (
     <header className={classes.header}>
-      <Link to="/" className={classes.logo}>
+      <Link to="/articles" className={classes.logo}>
         Realworld Blog
       </Link>
       <div>

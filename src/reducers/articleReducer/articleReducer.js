@@ -6,6 +6,9 @@ const articleReducer = (state = initState, action) => {
       return { ...state, content: action.content, onLoad: false };
     case 'FAIL_DOWNLOAD_ARTICLE':
       return { ...state, onLoad: false, onFail: action.error };
+    case 'MAKE_LOAD_STATUS': {
+      return { ...state, onLoad: true, onFail: false };
+    }
     default:
       return state;
   }

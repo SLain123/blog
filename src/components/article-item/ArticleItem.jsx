@@ -37,7 +37,7 @@ const ArticleItem = ({
       <div className={classes.header}>
         <div className={classes.headContainer}>
           <div className={classes.headInfo}>
-            <Link to={`/${slug}`} className={classes.title}>
+            <Link to={`/articles/${slug}`} className={classes.title}>
               {title}
             </Link>
             <div className={classes.like}>

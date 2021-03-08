@@ -27,13 +27,14 @@ const App = () => {
   return (
     <section className={classes.app}>
       <Header />
-      <Switch>
-        <main className={classes.container}>
-          <Route path="/" component={ArticleList} exact />
-          <Route path="/:id" component={ArticlePage} />
-          {/* <Redirect to="/home" /> */}
-        </main>
-      </Switch>
+
+      <main className={classes.container}>
+        <Switch>
+          <Redirect path="/" to="/articles" exact />
+          <Route path="/articles" component={ArticleList} exact />
+          <Route path="/articles/:slug" component={ArticlePage} exact />
+        </Switch>
+      </main>
     </section>
   );
 };

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/button-has-type */
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
@@ -6,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { format } from 'date-fns';
 import gfm from 'remark-gfm';
 import { getArticleService } from '../../service/ArticleService';
-import { getArticle, failDownloadArticle } from '../../reducers/articleReducer/articleActions';
+import { getArticle, failDownloadArticle, makeLoadStatus } from '../../reducers/articleReducer/articleActions';
 import Tags from '../tags';
 import Spinner from '../spinner';
 import ErrorMessage from '../error-message';
@@ -15,17 +16,19 @@ import like from '../article-item/like.svg';
 
 import classes from './ArticlePage.module.scss';
 
-function ArticlePage() {
+function ArticlePage({ match }) {
   const dispatch = useDispatch();
   const articleContent = useSelector((state) => state.article.content);
   const onLoad = useSelector((state) => state.article.onLoad);
   const onFail = useSelector((state) => state.article.onFail);
+  const articleUrl = match.params.slug;
 
   useEffect(() => {
-    getArticleService('how-to-train-your-dragon')
+    dispatch(makeLoadStatus());
+    getArticleService(articleUrl)
       .then((data) => dispatch(getArticle(data)))
       .catch((error) => dispatch(failDownloadArticle(error.message)));
-  }, [dispatch]);
+  }, [dispatch, articleUrl]);
 
   if (onLoad) {
     return <Spinner />;
