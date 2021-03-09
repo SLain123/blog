@@ -22,7 +22,10 @@
 }
 
 .like {
-  margin-left: 13px;
+  margin: 0 13px;
+  display: flex;
+  flex-flow: nowrap;
+  align-items: center;
 }
 
 .likePic {
@@ -75,4 +78,35 @@
   font-size: 12px;
   line-height: 22px;
   color: rgba(0, 0, 0, 0.75);
+}
+
+@media (max-width: 767px) {
+  .item {
+    padding: 5px;
+  }
+
+  .title {
+    max-width: 90%;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .headContainer {
+    width: 60%;
+  }
+
+  .authorInfo {
+    flex-flow: column;
+    align-items: flex-end;
+  }
+
+  .authorContainer {
+    align-items: flex-end;
+  }
+
+  .name {
+    max-width: 110px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  }
 }

@@ -47,3 +47,17 @@ $active-btn: #52c41a;
     margin-right: 19px;
   }
 }
+
+@media (max-width: 767px) {
+  .header {
+    padding: 0 5px;
+  }
+
+  .authBtn {
+    padding: 10px 5px;
+    
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
+}
