@@ -96,3 +96,35 @@
   margin-top: 25px;
   max-width: 96%;
 }
+
+@media (max-width: 767px) {
+  .item {
+    padding: 5px;
+  }
+
+  .title {
+    max-width: 90%;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .headContainer {
+    width: 60%;
+  }
+
+  .authorInfo {
+    flex-flow: column;
+    align-items: flex-end;
+  }
+
+  .authorContainer {
+    align-items: flex-end;
+  }
+
+  .name {
+    max-width: 110px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
