@@ -1,3 +1,5 @@
+$error-color: #f5222d;
+
 .formContainer {
   background: #fff;
   margin: 60px auto;
@@ -82,8 +84,8 @@
 .line {
   width: 100%;
   border: none;
-  color: #E8E8E8;
-  background-color: #E8E8E8;
+  color: #e8e8e8;
+  background-color: #e8e8e8;
   height: 1px;
   margin-top: 21px;
 }
@@ -95,4 +97,17 @@
 .checkbox {
   margin-top: 14px;
   margin-right: 12px;
+}
+
+.errorMessage {
+  color: $error-color;
+}
+
+.errorInput {
+  border: $error-color 1px solid;
+  outline: none;
+}
+
+.errorLabel {
+  color: red;
 }
