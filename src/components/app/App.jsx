@@ -6,6 +6,8 @@ import { getArticleListService } from '../../service/ArticleService';
 import Header from '../header/Header';
 import ArticleList from '../article-list';
 import ArticlePage from '../article-page';
+import SingInPage from '../sing-in-page';
+import SingUpPage from '../sing-up-page';
 import { getArticles, failDownloadArticles } from '../../reducers/listReducer/listActions';
 
 import 'antd/dist/antd.css';
@@ -33,6 +35,8 @@ const App = () => {
           <Redirect path="/" to="/articles" exact />
           <Route path="/articles" component={ArticleList} exact />
           <Route path="/articles/:slug" component={ArticlePage} exact />
+          <Route path="/sign-in" component={SingInPage} exact />
+          <Route path="/sign-up" component={SingUpPage} exact />
         </Switch>
       </main>
     </section>

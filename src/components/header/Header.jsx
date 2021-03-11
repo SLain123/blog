@@ -12,10 +12,10 @@ function Header() {
         Realworld Blog
       </Link>
       <div>
-        <Link to="/" className={classes.authBtn}>
+        <Link to="/sign-in" className={classes.authBtn}>
           Sign In
         </Link>
-        <Link to="/" className={`${classes.authBtn} ${classes.authBtn_active}`}>
+        <Link to="/sign-up" className={`${classes.authBtn} ${classes.authBtn_active}`}>
           Sign Up
         </Link>
       </div>
