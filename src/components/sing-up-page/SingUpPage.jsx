@@ -1,19 +1,77 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-// import { makeRegistration } from '../../service/userService';
+import { useSelector, useDispatch } from 'react-redux';
+import { makeRegistration } from '../../service/userService';
+import { errorWithRegistration, successRegistration } from '../../reducers/userReducer/userActions';
 
 import classes from './SingUpPage.module.scss';
 
+const genStatusBlock = (isError) => {
+  const { email = null, username = null } = isError;
+  const emailError = email ? <p className={classes.errorMessage}>{`E-Mail ${email}!`}</p> : null;
+  const usernameError = username ? <p className={classes.errorMessage}>{`User Name ${username}!`}</p> : null;
+
+  let commonMessage;
+  let styleBlock = classes.errorBlock;
+
+  if (typeof isError === 'string' && isError === 'success') {
+    styleBlock = classes.successBlock;
+    commonMessage = (
+      <>
+        <p className={`${classes.successMessage} ${classes.successTitle}`}>Successfully registration!</p>
+        <p className={classes.successMessage}>Redirect to sign-in page in 3 sec...</p>{' '}
+      </>
+    );
+  } else if (typeof error === 'string') {
+    commonMessage = <p className={classes.errorMessage}>{`Registration error: ${isError}`}</p>;
+  } else {
+    commonMessage = null;
+  }
+
+  return (
+    <div className={styleBlock}>
+      {emailError}
+      {usernameError}
+      {commonMessage}
+    </div>
+  );
+};
+
 const SingUpPage = () => {
+  const dispatch = useDispatch();
+  const onErrorReg = useSelector((state) => state.user.onError);
+  const onSuccessReg = useSelector((state) => state.user.onSuccess);
+  const statusMessage = onErrorReg ? genStatusBlock(onErrorReg) : null;
+
   const errorInputClass = `${classes.input} ${classes.errorInput}`;
   const { register, errors, handleSubmit, getValues } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) =>
+    makeRegistration(data)
+      .then((res) => {
+        if (res.errors) {
+          dispatch(errorWithRegistration(res.errors));
+        } else {
+          dispatch(errorWithRegistration('success'));
+          setTimeout(() => {
+            dispatch(successRegistration(true));
+            dispatch(successRegistration(false));
+          }, 2500);
+        }
+      })
+      .catch((error) => {
+        dispatch(errorWithRegistration(error.message));
+      });
+
+  if (onSuccessReg) {
+    return <Redirect to="/sign-in" />;
+  }
 
   return (
     <div className={classes.formContainer}>
       <p className={classes.header}>Create new account</p>
+      {statusMessage}
       <form className={classes.formBody} onSubmit={handleSubmit(onSubmit)}>
         <label className={classes.label} htmlFor="username">
           Username
@@ -59,7 +117,7 @@ const SingUpPage = () => {
           type="password"
           className={errors.username?.type ? errorInputClass : classes.input}
           placeholder="Password"
-          ref={register({ required: true, minLength: 6, maxLength: 40 })}
+          ref={register({ required: true, minLength: 8, maxLength: 40 })}
           name="password"
         />
         {errors.password?.type === 'required' && <span className={classes.errorMessage}>This is a required field</span>}
@@ -67,7 +125,7 @@ const SingUpPage = () => {
           <span className={classes.errorMessage}>Your password needs to be no more 40 characters.</span>
         )}
         {errors.password?.type === 'minLength' && (
-          <span className={classes.errorMessage}>Your username needs to be at least 6 characters.</span>
+          <span className={classes.errorMessage}>Your username needs to be at least 8 characters.</span>
         )}
         <label className={classes.label} htmlFor="repeat">
           Repeat Password
