@@ -3,29 +3,29 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import { makeRegistration } from '../../service/userService';
+import { getRegistration } from '../../service/UserService';
 import { errorWithRegistration, successRegistration } from '../../reducers/userReducer/userActions';
 
 import classes from './SingUpPage.module.scss';
 
-const genStatusBlock = (isError) => {
-  const { email = null, username = null } = isError;
+const genStatusBlock = (status) => {
+  const { email = null, username = null } = status;
   const emailError = email ? <p className={classes.errorMessage}>{`E-Mail ${email}!`}</p> : null;
   const usernameError = username ? <p className={classes.errorMessage}>{`User Name ${username}!`}</p> : null;
 
   let commonMessage;
   let styleBlock = classes.errorBlock;
 
-  if (typeof isError === 'string' && isError === 'success') {
+  if (typeof status === 'string' && status === 'success') {
     styleBlock = classes.successBlock;
     commonMessage = (
       <>
         <p className={`${classes.successMessage} ${classes.successTitle}`}>Successfully registration!</p>
-        <p className={classes.successMessage}>Redirect to sign-in page in 3 sec...</p>{' '}
+        <p className={classes.successMessage}>Redirect to sign-in page in 3 sec...</p>
       </>
     );
-  } else if (typeof error === 'string') {
-    commonMessage = <p className={classes.errorMessage}>{`Registration error: ${isError}`}</p>;
+  } else if (typeof status === 'string') {
+    commonMessage = <p className={classes.errorMessage}>{`Registration error: ${status}`}</p>;
   } else {
     commonMessage = null;
   }
@@ -41,14 +41,14 @@ const genStatusBlock = (isError) => {
 
 const SingUpPage = () => {
   const dispatch = useDispatch();
-  const onErrorReg = useSelector((state) => state.user.onError);
-  const onSuccessReg = useSelector((state) => state.user.onSuccess);
-  const statusMessage = onErrorReg ? genStatusBlock(onErrorReg) : null;
+  const statusReg = useSelector((state) => state.user.statusReg);
+  const onSuccessReg = useSelector((state) => state.user.onSuccessReg);
+  const statusMessage = statusReg ? genStatusBlock(statusReg) : null;
 
   const errorInputClass = `${classes.input} ${classes.errorInput}`;
   const { register, errors, handleSubmit, getValues } = useForm();
   const onSubmit = (data) =>
-    makeRegistration(data)
+    getRegistration(data)
       .then((res) => {
         if (res.errors) {
           dispatch(errorWithRegistration(res.errors));
@@ -97,7 +97,7 @@ const SingUpPage = () => {
         <input
           id="email"
           type="input"
-          className={errors.username?.type ? errorInputClass : classes.input}
+          className={errors.email?.type ? errorInputClass : classes.input}
           placeholder="Email address"
           ref={register({
             pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
@@ -115,7 +115,7 @@ const SingUpPage = () => {
         <input
           id="password"
           type="password"
-          className={errors.username?.type ? errorInputClass : classes.input}
+          className={errors.password?.type ? errorInputClass : classes.input}
           placeholder="Password"
           ref={register({ required: true, minLength: 8, maxLength: 40 })}
           name="password"
@@ -133,7 +133,7 @@ const SingUpPage = () => {
         <input
           id="repeat"
           type="password"
-          className={errors.username?.type ? errorInputClass : classes.input}
+          className={errors.repeat?.type ? errorInputClass : classes.input}
           placeholder="Password"
           ref={register({
             validate: (value) => value === getValues('password'),

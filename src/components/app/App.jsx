@@ -8,7 +8,9 @@ import ArticleList from '../article-list';
 import ArticlePage from '../article-page';
 import SingInPage from '../sing-in-page';
 import SingUpPage from '../sing-up-page';
+import { successAuth } from '../../reducers/userReducer/userActions';
 import { getArticles, failDownloadArticles } from '../../reducers/listReducer/listActions';
+import { getUserData } from '../../service/UserService';
 
 import 'antd/dist/antd.css';
 
@@ -18,6 +20,8 @@ const App = () => {
   const dispatch = useDispatch();
   const page = useSelector((state) => state.list.page);
 
+  // Подгрузка списка статей на старте
+
   useEffect(() => {
     setTimeout(() => {
       getArticleListService(page)
@@ -26,17 +30,29 @@ const App = () => {
     }, 1000);
   }, [dispatch, page]);
 
+  // Проверяет наличие токена в LS и получает данные пользователя;
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.token) {
+      dispatch(successAuth());
+      getUserData(user.token)
+        .then((res) => dispatch(successAuth(res.user)))
+        .catch(() => localStorage.clear());
+    }
+  }, [dispatch]);
+
   return (
     <section className={classes.app}>
       <Header />
 
       <main className={classes.container}>
         <Switch>
-          <Redirect path="/" to="/articles" exact />
           <Route path="/articles" component={ArticleList} exact />
           <Route path="/articles/:slug" component={ArticlePage} exact />
           <Route path="/sign-in" component={SingInPage} exact />
           <Route path="/sign-up" component={SingUpPage} exact />
+          <Redirect path="*" to="/articles" />
         </Switch>
       </main>
     </section>

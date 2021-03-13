@@ -1,3 +1,5 @@
+$error-color: #f5222d;
+
 .formContainer {
   background: #fff;
   margin: 60px auto;
@@ -77,4 +79,24 @@
 .link {
   color: #1890ff;
   margin-left: 5px;
+}
+
+.errorMessage {
+  color: $error-color;
+  margin: 0;
+  padding: 0;
+}
+
+.errorInput {
+  border: $error-color 1px solid;
+  outline: none;
+}
+
+.errorBlock {
+  background: rgba(209, 46, 46, 0.1);
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
 }
