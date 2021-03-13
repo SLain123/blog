@@ -18,10 +18,11 @@ export const postRequest = async (
   body,
   headers = {
     'Content-Type': 'application/json;charset=utf-8',
-  }
+  },
+  method = 'POST'
 ) => {
   const request = await fetch(url, {
-    method: 'POST',
+    method,
     headers,
     body,
   });

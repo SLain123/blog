@@ -1,44 +1,70 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable arrow-body-style */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { changeUserData } from '../../service/UserService';
+import { errorWithEditing, successEditing } from '../../reducers/userReducer/userActions';
 
 import classes from '../../style/formStyle.module.scss';
 
+const genStatusBlock = (status) => {
+  const { email = null, username = null } = status;
+  const emailError = email ? <p className={classes.errorMessage}>{`E-Mail ${email}!`}</p> : null;
+  const usernameError = username ? <p className={classes.errorMessage}>{`User Name ${username}!`}</p> : null;
+
+  let commonMessage;
+  let styleBlock = classes.errorBlock;
+
+  if (typeof status === 'string' && status === 'success') {
+    styleBlock = classes.successBlock;
+    commonMessage = (
+      <>
+        <p className={`${classes.successMessage} ${classes.successTitle}`}>Successfully registration!</p>
+        <p className={classes.successMessage}>Redirect to sign-in page in 3 sec...</p>
+      </>
+    );
+  } else if (typeof status === 'string') {
+    commonMessage = <p className={classes.errorMessage}>{`Registration error: ${status}`}</p>;
+  } else {
+    commonMessage = null;
+  }
+
+  return (
+    <div className={styleBlock}>
+      {emailError}
+      {usernameError}
+      {commonMessage}
+    </div>
+  );
+};
+
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const statusReg = useSelector((state) => state.user.statusReg);
-  const onSuccessReg = useSelector((state) => state.user.onSuccessReg);
-  // const statusMessage = statusReg ? genStatusBlock(statusReg) : null;
+  const statusEdit = useSelector((state) => state.user.statusEdit);
+  const statusMessage = statusEdit ? genStatusBlock(statusEdit) : null;
 
   const errorInputClass = `${classes.input} ${classes.errorInput}`;
-  const { register, errors, handleSubmit, getValues } = useForm();
-  const onSubmit = (data) => console.log(data);
-  // getRegistration(data)
-  //   .then((res) => {
-  //     if (res.errors) {
-  //       dispatch(errorWithRegistration(res.errors));
-  //     } else {
-  //       dispatch(errorWithRegistration('success'));
-  //       setTimeout(() => {
-  //         dispatch(successRegistration(true));
-  //         dispatch(successRegistration(false));
-  //       }, 2500);
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     dispatch(errorWithRegistration(error.message));
-  //   });
-
-  //   if (onSuccessReg) {
-  //     return <Redirect to="/sign-in" />;
-  //   }
+  const { register, errors, handleSubmit } = useForm();
+  const onSubmit = (data) => {
+    const userInfo = JSON.parse(localStorage.getItem('user'));
+    changeUserData(data, userInfo.token)
+      .then((res) => {
+        if (res.errors) {
+          dispatch(errorWithEditing(res.errors));
+        } else {
+          dispatch(errorWithEditing(false));
+          dispatch(successEditing(res.user));
+          localStorage.setItem('user', JSON.stringify(res.user));
+        }
+      })
+      .catch((error) => {
+        dispatch(errorWithEditing(error.message));
+      });
+  };
 
   return (
     <div className={classes.formContainer}>
       <p className={classes.header}>Edit Profile</p>
-      {/* {statusMessage} */}
+      {statusMessage}
       <form className={classes.formBody} onSubmit={handleSubmit(onSubmit)}>
         <label className={classes.label} htmlFor="username">
           Username
