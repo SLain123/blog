@@ -7,7 +7,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { getAuth } from '../../service/UserService';
 import { errorWithAuth, successAuth } from '../../reducers/userReducer/userActions';
 
-import classes from './SingInPage.module.scss';
+import classes from '../../style/formStyle.module.scss';
 
 const genStatusBlock = (status) => {
   const message = status.errors ? 'Your email or password is not correct!' : `Something was wrong: ${status}`;
@@ -61,7 +61,7 @@ const SingInPage = () => {
           className={errors.email?.type ? errorInputClass : classes.input}
           placeholder="Email address"
           ref={register({
-            pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+            pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,6}$/,
             required: true,
           })}
           name="email"

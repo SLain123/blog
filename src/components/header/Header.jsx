@@ -22,7 +22,7 @@ function Header() {
       <button type="button" className={classes.createBtn}>
         Create article
       </button>
-      <div className={classes.userInfo}>
+      <Link to="/profile" className={classes.userInfo}>
         <span className={classes.name}>{userInfo.username}</span>
         <img
           alt="avatar"
@@ -31,7 +31,7 @@ function Header() {
           height="46"
           className={classes.img}
         />
-      </div>
+      </Link>
       <button type="button" className={classes.logout} onClick={() => logout(dispatch)}>
         Log Out
       </button>

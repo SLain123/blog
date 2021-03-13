@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getRegistration } from '../../service/UserService';
 import { errorWithRegistration, successRegistration } from '../../reducers/userReducer/userActions';
 
-import classes from './SingUpPage.module.scss';
+import classes from '../../style/formStyle.module.scss';
 
 const genStatusBlock = (status) => {
   const { email = null, username = null } = status;
@@ -100,7 +100,7 @@ const SingUpPage = () => {
           className={errors.email?.type ? errorInputClass : classes.input}
           placeholder="Email address"
           ref={register({
-            pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+            pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,6}$/,
             required: true,
           })}
           name="email"

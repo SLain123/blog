@@ -8,6 +8,7 @@ import ArticleList from '../article-list';
 import ArticlePage from '../article-page';
 import SingInPage from '../sing-in-page';
 import SingUpPage from '../sing-up-page';
+import UserProfile from '../user-profile';
 import { successAuth } from '../../reducers/userReducer/userActions';
 import { getArticles, failDownloadArticles } from '../../reducers/listReducer/listActions';
 import { getUserData } from '../../service/UserService';
@@ -52,6 +53,7 @@ const App = () => {
           <Route path="/articles/:slug" component={ArticlePage} exact />
           <Route path="/sign-in" component={SingInPage} exact />
           <Route path="/sign-up" component={SingUpPage} exact />
+          <Route path="/profile" component={UserProfile} exact />
           <Redirect path="*" to="/articles" />
         </Switch>
       </main>
