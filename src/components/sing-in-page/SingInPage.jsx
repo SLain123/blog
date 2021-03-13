@@ -3,7 +3,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { getAuth } from '../../service/UserService';
 import { errorWithAuth, successAuth } from '../../reducers/userReducer/userActions';
 
@@ -22,6 +22,7 @@ const genStatusBlock = (status) => {
 const SingInPage = () => {
   const dispatch = useDispatch();
   const statusAuth = useSelector((state) => state.user.statusAuth);
+  const userInfo = useSelector((state) => state.user.userInfo);
   const statusMessage = statusAuth ? genStatusBlock(statusAuth) : null;
 
   const { register, errors, handleSubmit } = useForm();
@@ -34,12 +35,17 @@ const SingInPage = () => {
           dispatch(errorWithAuth(false));
           dispatch(successAuth(res.user));
           localStorage.setItem('user', JSON.stringify(res.user));
+          <Redirect to="/articles" />;
         }
       })
       .catch((error) => {
         dispatch(errorWithAuth(error.message));
       });
   const errorInputClass = `${classes.input} ${classes.errorInput}`;
+
+  if (userInfo) {
+    return <Redirect to="/articles" />;
+  }
 
   return (
     <div className={classes.formContainer}>

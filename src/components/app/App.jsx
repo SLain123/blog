@@ -38,7 +38,7 @@ const App = () => {
       dispatch(successAuth());
       getUserData(user.token)
         .then((res) => dispatch(successAuth(res.user)))
-        .catch(() => localStorage.clear());
+        .catch(() => localStorage.removeItem('user'));
     }
   }, [dispatch]);
 

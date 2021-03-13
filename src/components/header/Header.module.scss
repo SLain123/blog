@@ -7,6 +7,8 @@ $active-btn: #52c41a;
   justify-content: space-between;
   align-items: center;
   padding: 0 22px;
+  z-index: 1;
+  position: relative;
 
   & a:hover {
     color: rgba(0, 0, 0, 0.85);
@@ -48,6 +50,67 @@ $active-btn: #52c41a;
   }
 }
 
+.userBlock {
+  display: flex;
+  align-items: center;
+}
+
+.createBtn {
+  border: 1px solid $active-btn;
+  border-radius: 5px;
+  color: $active-btn;
+  padding: 3px 10px;
+  background-color: #fff;
+  font-size: 14px;
+  line-height: 22px;
+  cursor: pointer;
+  opacity: 0.9;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.userInfo {
+  margin: 0 27px;
+  max-width: 320px;
+  display: flex;
+  flex-flow: nowrap;
+  align-items: center;
+}
+
+.name {
+  margin-right: 13px;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.img {
+  width: 46px;
+  height: 46px;
+  border-radius: 100%;
+}
+
+.logout {
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.75);
+  border: rgba(0, 0, 0, 0.75) 1px solid;
+  border-radius: 5px;
+  padding: 6px 18px;
+  background-color: #fff;
+  cursor: pointer;
+  opacity: 0.9;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 767px) {
   .header {
     padding: 0 5px;
@@ -55,9 +118,13 @@ $active-btn: #52c41a;
 
   .authBtn {
     padding: 10px 5px;
-    
+
     &:first-child {
       margin-right: 10px;
     }
+  }
+
+  .userInfo {
+    max-width: 180px;
   }
 }

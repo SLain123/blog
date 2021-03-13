@@ -1,4 +1,4 @@
-const initState = { statusReg: false, onSuccessReg: false, statusAuth: false, userInfo: null };
+const initState = { statusReg: false, onSuccessReg: false, statusAuth: false, userInfo: false };
 
 const userReducer = (state = initState, action) => {
   switch (action.type) {
