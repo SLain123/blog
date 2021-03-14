@@ -1,7 +1,5 @@
-/* eslint-disable react/button-has-type */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import Tags from '../tags';
@@ -10,18 +8,7 @@ import like from './like.svg';
 
 import classes from './ArticleItem.module.scss';
 
-const ArticleItem = ({
-  title,
-  author,
-  body,
-  createdAt,
-  description,
-  favorited,
-  favoritesCount,
-  slug,
-  tagList,
-  updatedAt,
-}) => {
+const ArticleItem = ({ title, author, createdAt, description, favoritesCount, slug, tagList }) => {
   let { image, username } = author;
 
   if (image === '' || image === null) {
@@ -61,6 +48,16 @@ const ArticleItem = ({
       <p className={classes.description}>{description}</p>
     </li>
   );
+};
+
+ArticleItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  author: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])).isRequired,
+  createdAt: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  favoritesCount: PropTypes.number.isRequired,
+  slug: PropTypes.string.isRequired,
+  tagList: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default ArticleItem;

@@ -37,7 +37,7 @@ const genStatusBlock = (status) => {
   );
 };
 
-const UserProfile = () => {
+const UserProfilePage = () => {
   const dispatch = useDispatch();
   const statusEdit = useSelector((state) => state.user.statusEdit);
   const statusMessage = statusEdit ? genStatusBlock(statusEdit) : null;
@@ -138,4 +138,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default UserProfilePage;

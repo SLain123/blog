@@ -1,18 +1,16 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/button-has-type */
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import gfm from 'remark-gfm';
 import { getArticleService } from '../../service/ArticleService';
 import { getArticle, failDownloadArticle, makeLoadStatus } from '../../reducers/articleReducer/articleActions';
-import Tags from '../tags';
-import Spinner from '../spinner';
-import ErrorMessage from '../error-message';
+import Tags from '../../components/tags';
+import Spinner from '../../components/spinner';
+import ErrorMessage from '../../components/error-message';
 
-import like from '../article-item/like.svg';
+import like from '../../components/article-item/like.svg';
 
 import classes from './ArticlePage.module.scss';
 
@@ -39,7 +37,7 @@ function ArticlePage({ match }) {
   }
 
   if (articleContent !== null) {
-    const { title, body, author, createdAt, description, favoritesCount, tagList, updatedAt } = articleContent;
+    const { title, body, author, createdAt, description, favoritesCount, tagList } = articleContent;
     const { image, username } = author;
 
     return (
@@ -76,5 +74,14 @@ function ArticlePage({ match }) {
 
   return null;
 }
+
+ArticlePage.propTypes = {
+  match: PropTypes.exact({
+    params: PropTypes.object,
+    path: PropTypes.string,
+    url: PropTypes.string,
+    isExact: PropTypes.bool,
+  }).isRequired,
+};
 
 export default ArticlePage;

@@ -1,14 +1,13 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getArticleListService } from '../../service/ArticleService';
 import Header from '../header/Header';
-import ArticleList from '../article-list';
-import ArticlePage from '../article-page';
-import SingInPage from '../sing-in-page';
-import SingUpPage from '../sing-up-page';
-import UserProfile from '../user-profile';
+import ArticleListPage from '../../pages/article-list-page';
+import ArticlePage from '../../pages/article-page';
+import SingInPage from '../../pages/sing-in-page';
+import SingUpPage from '../../pages/sing-up-page';
+import UserProfilePage from '../../pages/user-profile-page';
 import { successAuth } from '../../reducers/userReducer/userActions';
 import { getArticles, failDownloadArticles } from '../../reducers/listReducer/listActions';
 import { getUserData } from '../../service/UserService';
@@ -49,11 +48,11 @@ const App = () => {
 
       <main className={classes.container}>
         <Switch>
-          <Route path="/articles" component={ArticleList} exact />
+          <Route path="/articles" component={ArticleListPage} exact />
           <Route path="/articles/:slug" component={ArticlePage} exact />
           <Route path="/sign-in" component={SingInPage} exact />
           <Route path="/sign-up" component={SingUpPage} exact />
-          <Route path="/profile" component={UserProfile} exact />
+          <Route path="/profile" component={UserProfilePage} exact />
           <Redirect path="*" to="/articles" />
         </Switch>
       </main>

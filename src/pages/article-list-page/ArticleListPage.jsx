@@ -2,15 +2,15 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Pagination } from 'antd';
 import { uniqueId } from 'lodash';
-import ArticleItem from '../article-item';
+import ArticleItem from '../../components/article-item';
 import { changePage } from '../../reducers/listReducer/listActions';
-import Spinner from '../spinner';
-import ErrorMessage from '../error-message';
+import Spinner from '../../components/spinner';
+import ErrorMessage from '../../components/error-message';
 
-import classes from './ArticleList.module.scss';
+import classes from './ArticleListPage.module.scss';
 import './pagination.scss';
 
-const ArticleList = () => {
+const ArticleListPage = () => {
   const dispatch = useDispatch();
   const articles = useSelector((state) => state.list.articles);
   const articlesCount = useSelector((state) => state.list.articlesCount);
@@ -43,4 +43,4 @@ const ArticleList = () => {
   );
 };
 
-export default ArticleList;
+export default ArticleListPage;
