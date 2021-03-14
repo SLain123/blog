@@ -28,27 +28,6 @@ $success-color: #52c41a;
   flex-flow: column;
 }
 
-.label {
-  font-family: Roboto;
-  font-size: 14px;
-  line-height: 22px;
-  color: #262626;
-  margin-top: 12px;
-}
-
-.input {
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  padding: 8px 12px;
-  font-family: Roboto;
-
-  &::placeholder {
-    color: #bfbfbf;
-    font-size: 16px;
-    font-family: Roboto;
-  }
-}
-
 .btn {
   margin-top: 21px;
   background: #1890ff;
@@ -65,72 +44,10 @@ $success-color: #52c41a;
   }
 }
 
-.footer {
-  display: flex;
-  justify-content: center;
-}
-
-.text {
-  font-family: Roboto;
-  font-size: 12px;
-  line-height: 20px;
-  color: #8c8c8c;
-}
-
-.link {
-  color: #1890ff;
-  margin-left: 5px;
-}
-
-.line {
-  width: 100%;
-  border: none;
-  color: #e8e8e8;
-  background-color: #e8e8e8;
-  height: 1px;
-  margin-top: 21px;
-}
-
-.checkboxContainer {
-  display: flex;
-}
-
-.checkbox {
-  margin-top: 14px;
-  margin-right: 12px;
-}
-
-.errorBlock {
-  background: rgba(209, 46, 46, 0.1);
-  padding: 5px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  flex-flow: column;
-}
-
 .errorMessage {
   color: $error-color;
   margin: 0;
   padding: 0;
-}
-
-.errorInput {
-  border: $error-color 1px solid;
-  outline: none;
-}
-
-.errorLabel {
-  color: $error-color;
-}
-
-.successBlock {
-  background: rgba(40, 153, 40, 0.1);
-  padding: 10px 5px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  flex-flow: column;
 }
 
 .successTitle {
@@ -140,4 +57,21 @@ $success-color: #52c41a;
 .successMessage {
   color: $success-color;
   margin: 0;
+}
+
+.errorBlock {
+  background: rgba(209, 46, 46, 0.1);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+}
+
+.successBlock {
+  background: rgba(40, 153, 40, 0.1);
+  padding: 10px 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
 }

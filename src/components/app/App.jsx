@@ -5,8 +5,8 @@ import { getArticleListService } from '../../service/ArticleService';
 import Header from '../header/Header';
 import ArticleListPage from '../../pages/article-list-page';
 import ArticlePage from '../../pages/article-page';
-import SingInPage from '../../pages/sing-in-page';
-import SingUpPage from '../../pages/sing-up-page';
+import SignInPage from '../../pages/sign-in-page';
+import SignUpPage from '../../pages/sign-up-page';
 import UserProfilePage from '../../pages/user-profile-page';
 import { successAuth } from '../../reducers/userReducer/userActions';
 import { getArticles, failDownloadArticles } from '../../reducers/listReducer/listActions';
@@ -50,8 +50,8 @@ const App = () => {
         <Switch>
           <Route path="/articles" component={ArticleListPage} exact />
           <Route path="/articles/:slug" component={ArticlePage} exact />
-          <Route path="/sign-in" component={SingInPage} exact />
-          <Route path="/sign-up" component={SingUpPage} exact />
+          <Route path="/sign-in" component={SignInPage} exact />
+          <Route path="/sign-up" component={SignUpPage} exact />
           <Route path="/profile" component={UserProfilePage} exact />
           <Redirect path="*" to="/articles" />
         </Switch>

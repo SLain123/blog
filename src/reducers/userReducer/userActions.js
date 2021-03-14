@@ -1,12 +1,12 @@
 /* eslint-disable import/prefer-default-export */
-export const errorWithRegistration = (errors) => ({ type: 'ERROR_WITH_REGISTRATION', errors });
+export const changeRegStatus = (errors) => ({ type: 'CHANGE_REG_STATUS', errors });
 
 export const successRegistration = (status) => ({ type: 'SUCCESS_REGISTRATION', status });
 
-export const errorWithAuth = (errors) => ({ type: 'ERROR_WITH_AUTH', errors });
+export const changeAuthStatus = (errors) => ({ type: 'CHANGE_AUTH_STATUS', errors });
 
 export const successAuth = (user) => ({ type: 'SUCCESS_AUTH', user });
 
-export const errorWithEditing = (errors) => ({ type: 'ERROR_WITH_EDITING', errors });
+export const changeEditStatus = (errors) => ({ type: 'CHANGE_EDIT_STATUS', errors });
 
 export const successEditing = (user) => ({ type: 'SUCCESS_EDITING', user });

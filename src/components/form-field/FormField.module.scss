@@ -1,0 +1,38 @@
+$error-color: #f5222d;
+$success-color: #52c41a;
+
+.label {
+  font-family: Roboto;
+  font-size: 14px;
+  line-height: 22px;
+  color: #262626;
+  margin-top: 12px;
+}
+
+.input {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-family: Roboto;
+
+  &::placeholder {
+    color: #bfbfbf;
+    font-size: 16px;
+    font-family: Roboto;
+  }
+}
+
+.errorInput {
+  border: $error-color 1px solid;
+  outline: none;
+}
+
+.errorLabel {
+  color: $error-color;
+}
+
+.errorMessage {
+  color: $error-color;
+  margin: 0;
+  padding: 0;
+}
