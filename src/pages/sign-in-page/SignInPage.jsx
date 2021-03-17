@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { getAuth } from '../../service/UserService';
 import { changeAuthStatus, successAuth } from '../../reducers/userReducer/userActions';
-import Form from '../../components/form';
+import AuthRegForm from '../../components/auth-reg-form';
 import FormField from '../../components/form-field';
 
 const SignInPage = () => {
@@ -34,7 +34,7 @@ const SignInPage = () => {
   }
 
   return (
-    <Form
+    <AuthRegForm
       title="Sign In"
       onSubmit={handleSubmit(onSubmit)}
       btnLabel="Login"
@@ -67,7 +67,7 @@ const SignInPage = () => {
         errors={errors}
         errorOptions={[{ target: 'required', message: 'This is a required field' }]}
       />
-    </Form>
+    </AuthRegForm>
   );
 };
 

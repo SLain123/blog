@@ -8,6 +8,7 @@ import ArticlePage from '../../pages/article-page';
 import SignInPage from '../../pages/sign-in-page';
 import SignUpPage from '../../pages/sign-up-page';
 import UserProfilePage from '../../pages/user-profile-page';
+import CreateArticlePage from '../../pages/create-article-page';
 import { successAuth } from '../../reducers/userReducer/userActions';
 import { getArticles, failDownloadArticles } from '../../reducers/listReducer/listActions';
 import { getUserData } from '../../service/UserService';
@@ -53,6 +54,7 @@ const App = () => {
           <Route path="/sign-in" component={SignInPage} exact />
           <Route path="/sign-up" component={SignUpPage} exact />
           <Route path="/profile" component={UserProfilePage} exact />
+          <Route path="/new-article" component={CreateArticlePage} exact />
           <Redirect path="*" to="/articles" />
         </Switch>
       </main>

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRegistration } from '../../service/UserService';
 import { changeRegStatus, successRegistration } from '../../reducers/userReducer/userActions';
-import Form from '../../components/form';
+import AuthRegForm from '../../components/auth-reg-form';
 import FormField from '../../components/form-field';
 
 import classes from './SignUpPage.module.scss';
@@ -43,7 +43,7 @@ const SignUpPage = () => {
   }
 
   return (
-    <Form
+    <AuthRegForm
       title="Create new account"
       onSubmit={handleSubmit(onSubmit)}
       btnLabel="Create"
@@ -123,7 +123,7 @@ const SignUpPage = () => {
           I agree to the processing of my personal information
         </label>
       </div>
-    </Form>
+    </AuthRegForm>
   );
 };
 

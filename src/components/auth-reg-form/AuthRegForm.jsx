@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FormFooter from '../form-footer';
 
-import classes from './Form.module.scss';
+import classes from './AuthRegForm.module.scss';
 
 const genStatusBlock = (status) => {
   const { email = null, username = null, errors = null } = status;
@@ -37,7 +37,7 @@ const genStatusBlock = (status) => {
   );
 };
 
-const Form = ({ title, status, onSubmit, children, btnLabel, footer }) => (
+const AuthRegForm = ({ title, status, onSubmit, children, btnLabel, footer }) => (
   <div className={classes.formContainer}>
     <p className={classes.header}>{title}</p>
     {genStatusBlock(status)}
@@ -51,7 +51,7 @@ const Form = ({ title, status, onSubmit, children, btnLabel, footer }) => (
   </div>
 );
 
-Form.propTypes = {
+AuthRegForm.propTypes = {
   title: PropTypes.string.isRequired,
   status: PropTypes.oneOfType([PropTypes.bool, PropTypes.string, PropTypes.object]),
   onSubmit: PropTypes.func.isRequired,
@@ -60,9 +60,9 @@ Form.propTypes = {
   footer: PropTypes.objectOf(PropTypes.string),
 };
 
-Form.defaultProps = {
+AuthRegForm.defaultProps = {
   status: null,
   footer: null,
 };
 
-export default Form;
+export default AuthRegForm;

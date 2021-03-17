@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Redirect } from 'react-router-dom';
 import { changeUserData } from '../../service/UserService';
 import { changeEditStatus, successEditing } from '../../reducers/userReducer/userActions';
-import Form from '../../components/form';
+import AuthRegForm from '../../components/auth-reg-form';
 import FormField from '../../components/form-field';
 
 const UserProfilePage = () => {
@@ -44,7 +44,7 @@ const UserProfilePage = () => {
   }
 
   return (
-    <Form title="Edit Profile" onSubmit={handleSubmit(onSubmit)} btnLabel="Save" status={statusEdit}>
+    <AuthRegForm title="Edit Profile" onSubmit={handleSubmit(onSubmit)} btnLabel="Save" status={statusEdit}>
       <FormField
         label="Username"
         name="username"
@@ -97,7 +97,7 @@ const UserProfilePage = () => {
         errors={errors}
         errorOptions={[{ target: 'pattern', message: 'You need specify a valid URL for image' }]}
       />
-    </Form>
+    </AuthRegForm>
   );
 };
 

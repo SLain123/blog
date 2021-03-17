@@ -33,7 +33,6 @@ export const getUserData = (token) => {
 };
 
 export const changeUserData = (body, token) => {
-  console.log(body);
   const headers = {
     'Content-Type': 'application/json;charset=utf-8',
     Authorization: `Token ${token}`,
