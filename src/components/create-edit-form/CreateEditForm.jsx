@@ -14,17 +14,18 @@ const clearTagList = (index, setInnerTagList) => {
   });
 };
 
-const CreateEditForm = ({ formTitle, tags }) => {
+const CreateEditForm = ({ formTitle, tags, submitFunc }) => {
   const listRef = useRef();
   const [innerTagList, setInnerTagList] = useState(tags);
+
   const { register, errors, handleSubmit, control } = useForm();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'tag',
+    name: 'tagList',
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    submitFunc(data);
   };
 
   useEffect(() => {
@@ -58,12 +59,12 @@ const CreateEditForm = ({ formTitle, tags }) => {
         </label>
         <textarea
           placeholder="Text"
-          className={errors.text?.type ? `${classes.errorAria} ${classes.textaria}` : classes.textaria}
+          className={errors.body?.type ? `${classes.errorAria} ${classes.textaria}` : classes.textaria}
           id="text"
-          name="text"
+          name="body"
           ref={register({ required: true })}
         />
-        {errors.text?.type === 'required' && <span className={classes.errorMessage}>This is a required field</span>}
+        {errors.body?.type === 'required' && <span className={classes.errorMessage}>This is a required field</span>}
         <div className={classes.tagBlock}>
           <p className={classes.title}>Tags</p>
           <ul className={classes.tagList} ref={listRef}>
@@ -76,7 +77,7 @@ const CreateEditForm = ({ formTitle, tags }) => {
                   type="input"
                   placeholder="Tag"
                   id="tag"
-                  name={`tag[${index}].name`}
+                  name={`tagList[${index}].tag`}
                   ref={register()}
                   className={classes.input}
                   defaultValue={innerTagList[index]}
@@ -113,6 +114,7 @@ const CreateEditForm = ({ formTitle, tags }) => {
 CreateEditForm.propTypes = {
   formTitle: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
+  submitFunc: PropTypes.func.isRequired,
 };
 
 CreateEditForm.defaultProps = {

@@ -10,7 +10,6 @@ import FormField from '../../components/form-field';
 const UserProfilePage = () => {
   const dispatch = useDispatch();
   const statusEdit = useSelector((state) => state.user.statusEdit);
-  const userInfo = useSelector((state) => state.user.userInfo);
 
   const { register, errors, handleSubmit } = useForm();
   const onSubmit = (data) => {
@@ -34,10 +33,6 @@ const UserProfilePage = () => {
         dispatch(changeEditStatus(error.message));
       });
   };
-
-  if (!userInfo) {
-    return <Redirect to="/sign-in" />;
-  }
 
   if (statusEdit === 'redirect') {
     return <Redirect to="/articles" />;

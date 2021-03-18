@@ -70,6 +70,7 @@ $active-btn: #52c41a;
 
   &:hover {
     opacity: 1;
+    color: $active-btn !important;
   }
 }
 

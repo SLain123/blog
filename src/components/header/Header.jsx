@@ -17,9 +17,9 @@ function Header() {
 
   const isLoginBlock = userInfo ? (
     <div className={classes.userBlock}>
-      <button type="button" className={classes.createBtn}>
+      <Link to="/new-article" className={classes.createBtn}>
         Create article
-      </button>
+      </Link>
       <Link to="/profile" className={classes.userInfo}>
         <span className={classes.name}>{userInfo.username}</span>
         <img

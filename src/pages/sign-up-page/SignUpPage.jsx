@@ -13,7 +13,6 @@ const SignUpPage = () => {
   const dispatch = useDispatch();
   const statusReg = useSelector((state) => state.user.statusReg);
   const onSuccessReg = useSelector((state) => state.user.onSuccessReg);
-  const userInfo = useSelector((state) => state.user.userInfo);
 
   const { register, errors, handleSubmit, getValues } = useForm();
   const onSubmit = (data) =>
@@ -26,7 +25,6 @@ const SignUpPage = () => {
           setTimeout(() => {
             dispatch(changeRegStatus(false));
             dispatch(successRegistration(true));
-            dispatch(successRegistration(false));
           }, 2500);
         }
       })
@@ -35,11 +33,8 @@ const SignUpPage = () => {
       });
 
   if (onSuccessReg) {
+    setTimeout(() => dispatch(successRegistration(false)), 500);
     return <Redirect to="/sign-in" />;
-  }
-
-  if (userInfo) {
-    return <Redirect to="/articles" />;
   }
 
   return (

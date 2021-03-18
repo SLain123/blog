@@ -10,7 +10,6 @@ import FormField from '../../components/form-field';
 const SignInPage = () => {
   const dispatch = useDispatch();
   const statusAuth = useSelector((state) => state.user.statusAuth);
-  const userInfo = useSelector((state) => state.user.userInfo);
 
   const { register, errors, handleSubmit } = useForm();
   const onSubmit = (data) =>
@@ -28,10 +27,6 @@ const SignInPage = () => {
       .catch((error) => {
         dispatch(changeAuthStatus(error.message));
       });
-
-  if (userInfo) {
-    return <Redirect to="/articles" />;
-  }
 
   return (
     <AuthRegForm
