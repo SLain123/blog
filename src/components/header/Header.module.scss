@@ -70,7 +70,8 @@ $active-btn: #52c41a;
 
   &:hover {
     opacity: 1;
-    color: $active-btn !important;
+    color: #fff !important;
+    background-color: $active-btn;
   }
 }
 
@@ -111,6 +112,8 @@ $active-btn: #52c41a;
 
   &:hover {
     opacity: 1;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
   }
 }
 

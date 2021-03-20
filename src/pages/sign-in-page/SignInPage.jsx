@@ -1,9 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import { getAuth } from '../../service/UserService';
-import { changeAuthStatus, successAuth } from '../../reducers/userReducer/userActions';
+import { changeAuthStatus, successAuth, changeLoginStatus } from '../../reducers/userReducer/userActions';
 import AuthRegForm from '../../components/auth-reg-form';
 import FormField from '../../components/form-field';
 
@@ -21,7 +20,7 @@ const SignInPage = () => {
           dispatch(changeAuthStatus(false));
           dispatch(successAuth(res.user));
           localStorage.setItem('user', JSON.stringify(res.user));
-          <Redirect to="/articles" />;
+          dispatch(changeLoginStatus(true));
         }
       })
       .catch((error) => {

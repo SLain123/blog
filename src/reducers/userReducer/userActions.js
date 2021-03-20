@@ -10,3 +10,5 @@ export const successAuth = (user) => ({ type: 'SUCCESS_AUTH', user });
 export const changeEditStatus = (errors) => ({ type: 'CHANGE_EDIT_STATUS', errors });
 
 export const successEditing = (user) => ({ type: 'SUCCESS_EDITING', user });
+
+export const changeLoginStatus = (status) => ({ type: 'CHANGE_LOGIN_STATUS', status });

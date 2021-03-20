@@ -2,14 +2,22 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const PrivateRoute = ({ component: Component, auth, link, ...rest }) => (
-  <Route {...rest} render={(props) => (auth === false ? <Redirect to={link} /> : <Component {...props} />)} />
-);
+const PrivateRoute = ({ component: Component, auth, link, ...rest }) => {
+  const result = (
+    <Route {...rest} render={(props) => (auth === true ? <Component {...props} /> : <Redirect to={link} />)} />
+  );
+
+  return result;
+};
 
 PrivateRoute.propTypes = {
-  component: PropTypes.node.isRequired,
+  component: PropTypes.elementType.isRequired,
   link: PropTypes.string.isRequired,
-  auth: PropTypes.bool.isRequired,
+  auth: PropTypes.bool,
+};
+
+PrivateRoute.defaultProps = {
+  auth: false,
 };
 
 export default PrivateRoute;

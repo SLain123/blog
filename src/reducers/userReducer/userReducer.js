@@ -1,4 +1,11 @@
-const initState = { statusReg: false, onSuccessReg: false, statusAuth: false, userInfo: false, statusEdit: false };
+const initState = {
+  statusReg: false,
+  onSuccessReg: false,
+  statusAuth: false,
+  userInfo: false,
+  statusEdit: false,
+  isLogin: false,
+};
 
 const userReducer = (state = initState, action) => {
   switch (action.type) {
@@ -19,6 +26,9 @@ const userReducer = (state = initState, action) => {
     }
     case 'SUCCESS_EDITING': {
       return { ...state, userInfo: action.user };
+    }
+    case 'CHANGE_LOGIN_STATUS': {
+      return { ...state, isLogin: action.status };
     }
 
     default:

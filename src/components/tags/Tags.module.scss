@@ -10,9 +10,12 @@
   background-color: transparent;
   border-radius: 2px;
   padding: 2px 5px;
-  cursor: pointer;
-  opacity: .9;
+  opacity: 0.9;
   margin-right: 5px;
+  max-width: 110px;
+  max-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:hover {
     opacity: 1;

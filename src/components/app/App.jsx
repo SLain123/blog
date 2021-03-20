@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PrivateRoute from '../private-route';
 import Header from '../header/Header';
@@ -9,7 +10,8 @@ import SignInPage from '../../pages/sign-in-page';
 import SignUpPage from '../../pages/sign-up-page';
 import UserProfilePage from '../../pages/user-profile-page';
 import CreateArticlePage from '../../pages/create-article-page';
-import { successAuth } from '../../reducers/userReducer/userActions';
+import EditArticlePage from '../../pages/edit-article-page';
+import { successAuth, changeLoginStatus } from '../../reducers/userReducer/userActions';
 
 import { getUserData } from '../../service/UserService';
 
@@ -19,7 +21,7 @@ import classes from './App.module.scss';
 
 const App = () => {
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.user.userInfo);
+  const isLogin = useSelector((state) => state.user.isLogin);
 
   // Проверяет наличие токена в LS и получает данные пользователя;
 
@@ -28,7 +30,10 @@ const App = () => {
     if (user && user.token) {
       dispatch(successAuth());
       getUserData(user.token)
-        .then((res) => dispatch(successAuth(res.user)))
+        .then((res) => {
+          dispatch(successAuth(res.user));
+          dispatch(changeLoginStatus(true));
+        })
         .catch(() => localStorage.removeItem('user'));
     }
   }, [dispatch]);
@@ -39,12 +44,13 @@ const App = () => {
 
       <main className={classes.container}>
         <Switch>
-          <Route path="/articles" component={ArticleListPage} exact />
-          <Route path="/articles/:slug" component={ArticlePage} exact />
-          <PrivateRoute path="/sign-in" auth={!userInfo} component={SignInPage} link="/articles" exact />
-          <PrivateRoute path="/sign-up" auth={!userInfo} component={SignUpPage} link="/articles" exact />
-          <PrivateRoute path="/profile" auth={userInfo} component={UserProfilePage} link="/sign-in" exact />
-          <PrivateRoute path="/new-article" auth={userInfo} component={CreateArticlePage} link="/sign-in" exact />
+          <PrivateRoute path="/sign-in" auth={!isLogin} component={SignInPage} link="/articles" />
+          <PrivateRoute path="/sign-up" auth={!isLogin} component={SignUpPage} link="/profile" />
+          <PrivateRoute path="/profile" auth={isLogin} component={UserProfilePage} link="/sign-in" />
+          <PrivateRoute path="/new-article" auth={isLogin} component={CreateArticlePage} link="/sign-in" />
+          <PrivateRoute path="/articles/:slug/edit" auth={isLogin} component={EditArticlePage} link="/sign-in" />
+          <Route path="/articles/:slug" component={ArticlePage} />
+          <Route path="/articles" component={ArticleListPage} />
           <Redirect path="*" to="/articles" />
         </Switch>
       </main>
@@ -53,5 +59,3 @@ const App = () => {
 };
 
 export default App;
-
-// <Route path="*" ></Route>

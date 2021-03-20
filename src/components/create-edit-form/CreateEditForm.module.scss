@@ -153,6 +153,11 @@ $add-color: #1890ff;
   color: $error-color;
   border: 1px solid $error-color;
   margin-right: 17px;
+
+  &:hover {
+    background-color: $error-color;
+    color: #fff;
+  }
 }
 
 .add {
@@ -163,4 +168,8 @@ $add-color: #1890ff;
   position: absolute;
   bottom: 0;
   right: 0;
+  &:hover {
+    background-color: $add-color;
+    color: #fff;
+  }
 }

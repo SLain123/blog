@@ -17,7 +17,7 @@ const CreateArticlePage = () => {
   const create = (data) => {
     const { tagList } = data;
     const newTagsList = tagList.filter((item) => item.tag.match(/[\S]/) !== null).map(({ tag }) => tag);
-    const body = { ...data, tagList: newTagsList };
+    const body = { article: { ...data, tagList: newTagsList } };
 
     const userData = JSON.parse(localStorage.getItem('user'));
 

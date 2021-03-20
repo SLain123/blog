@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { PropTypes } from 'prop-types';
 import FormField from '../form-field';
@@ -14,9 +14,10 @@ const clearTagList = (index, setInnerTagList) => {
   });
 };
 
-const CreateEditForm = ({ formTitle, tags, submitFunc }) => {
+const CreateEditForm = ({ formTitle, tagList, submitFunc, title, description, body }) => {
+  const correctTagList = useMemo(() => (tagList.length < 1 ? [''] : tagList), [tagList]);
   const listRef = useRef();
-  const [innerTagList, setInnerTagList] = useState(tags);
+  const [innerTagList, setInnerTagList] = useState(correctTagList);
 
   const { register, errors, handleSubmit, control } = useForm();
   const { fields, append, remove } = useFieldArray({
@@ -29,8 +30,8 @@ const CreateEditForm = ({ formTitle, tags, submitFunc }) => {
   };
 
   useEffect(() => {
-    tags.forEach((tag) => append({ tag }));
-  }, [append, tags]);
+    correctTagList.forEach((tag) => append({ tag }));
+  }, [append, correctTagList]);
 
   return (
     <div className={classes.formContainer}>
@@ -44,6 +45,7 @@ const CreateEditForm = ({ formTitle, tags, submitFunc }) => {
           thisRef={register({ required: true })}
           errors={errors}
           errorOptions={[{ target: 'required', message: 'This is a required field' }]}
+          value={title}
         />
         <FormField
           label="Short description"
@@ -53,6 +55,7 @@ const CreateEditForm = ({ formTitle, tags, submitFunc }) => {
           thisRef={register({ required: true })}
           errors={errors}
           errorOptions={[{ target: 'required', message: 'This is a required field' }]}
+          value={description}
         />
         <label className={classes.label} htmlFor="text">
           Text
@@ -63,6 +66,7 @@ const CreateEditForm = ({ formTitle, tags, submitFunc }) => {
           id="text"
           name="body"
           ref={register({ required: true })}
+          defaultValue={body}
         />
         {errors.body?.type === 'required' && <span className={classes.errorMessage}>This is a required field</span>}
         <div className={classes.tagBlock}>
@@ -113,12 +117,18 @@ const CreateEditForm = ({ formTitle, tags, submitFunc }) => {
 
 CreateEditForm.propTypes = {
   formTitle: PropTypes.string.isRequired,
-  tags: PropTypes.arrayOf(PropTypes.string),
+  tagList: PropTypes.arrayOf(PropTypes.string),
   submitFunc: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  body: PropTypes.string,
 };
 
 CreateEditForm.defaultProps = {
-  tags: [''],
+  tagList: [''],
+  title: '',
+  description: '',
+  body: '',
 };
 
 export default CreateEditForm;

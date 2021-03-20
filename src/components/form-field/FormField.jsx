@@ -4,7 +4,7 @@ import React from 'react';
 
 import classes from './FormField.module.scss';
 
-const FormField = ({ name, label, type, errors, placeholder, thisRef, errorOptions }) => {
+const FormField = ({ name, label, type, errors, placeholder, thisRef, errorOptions, value = '' }) => {
   const errorInputClass = `${classes.input} ${classes.errorInput}`;
 
   return (
@@ -19,6 +19,7 @@ const FormField = ({ name, label, type, errors, placeholder, thisRef, errorOptio
         placeholder={placeholder}
         ref={thisRef}
         name={name}
+        defaultValue={value}
       />
       {errorOptions.map(
         ({ target, message }) =>

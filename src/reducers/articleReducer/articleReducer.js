@@ -1,4 +1,11 @@
-const initState = { content: null, onLoad: true, onFail: false, createEditStatus: false };
+const initState = {
+  content: null,
+  onLoad: true,
+  onFail: false,
+  createEditStatus: false,
+  isUserEdit: false,
+  displayModal: false,
+};
 
 const articleReducer = (state = initState, action) => {
   switch (action.type) {
@@ -11,6 +18,12 @@ const articleReducer = (state = initState, action) => {
     }
     case 'CHANGE_CREATE_OR_EDIT_ARTICLE_STATUS': {
       return { ...state, createEditStatus: action.status };
+    }
+    case 'CHANGE_IS_USER_EDIT_STATUS': {
+      return { ...state, isUserEdit: action.status };
+    }
+    case 'CHANGE_DISPLAY_MODAL_STATUS': {
+      return { ...state, displayModal: action.status };
     }
     default:
       return state;

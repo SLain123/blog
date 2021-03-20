@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { successAuth } from '../../reducers/userReducer/userActions';
+import { successAuth, changeLoginStatus } from '../../reducers/userReducer/userActions';
 
 import avatar from './avatar.png';
 import classes from './Header.module.scss';
@@ -9,13 +9,15 @@ import classes from './Header.module.scss';
 const logout = (dispatch) => {
   localStorage.removeItem('user');
   dispatch(successAuth(false));
+  dispatch(changeLoginStatus(false));
 };
 
 function Header() {
+  const isLogin = useSelector((state) => state.user.isLogin);
   const userInfo = useSelector((state) => state.user.userInfo);
   const dispatch = useDispatch();
 
-  const isLoginBlock = userInfo ? (
+  const isLoginBlock = isLogin ? (
     <div className={classes.userBlock}>
       <Link to="/new-article" className={classes.createBtn}>
         Create article
