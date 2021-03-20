@@ -21,12 +21,14 @@ const CreateArticlePage = () => {
 
     const userData = JSON.parse(localStorage.getItem('user'));
 
-    createArticle(userData.token, body).then((res) => {
-      if (res.article) {
-        dispatch(changeCreateEditStatus(true));
-      }
-      return null;
-    });
+    createArticle(userData.token, body)
+      .then((res) => {
+        if (res.article) {
+          dispatch(changeCreateEditStatus(true));
+        }
+        return null;
+      })
+      .catch((err) => console.log(err));
   };
 
   if (createEditStatus) {

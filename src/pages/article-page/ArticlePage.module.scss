@@ -23,10 +23,14 @@ body {
 .headInfo {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .like {
   margin-left: 13px;
+  display: flex;
+  flex-flow: nowrap;
+  align-items: center;
 }
 
 .likePic {
@@ -44,10 +48,16 @@ body {
   font-size: 20px;
   line-height: 28px;
   color: #1890ff;
+  max-width: 500px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .tags {
   margin: 6px 0;
+  max-width: 500px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .tagItem {
@@ -105,11 +115,17 @@ body {
   font-size: 12px;
   line-height: 22px;
   color: rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .text {
   margin-top: 25px;
   max-width: 96%;
+  max-width: 700px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .controlBlock {
@@ -172,6 +188,11 @@ body {
     padding: 5px;
   }
 
+  .like {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
   .title {
     max-width: 90%;
     overflow-x: hidden;
@@ -195,5 +216,18 @@ body {
     max-width: 110px;
     overflow-x: hidden;
     text-overflow: ellipsis;
+  }
+
+  .controlBlock {
+    flex-flow: column;
+    padding: 0;
+  }
+
+  .controlBtn {
+    width: 100%;
+  }
+
+  .editBtn {
+    margin-top: 5px;
   }
 }

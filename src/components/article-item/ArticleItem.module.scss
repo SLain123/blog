@@ -19,6 +19,7 @@
 .headInfo {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .like {
@@ -47,6 +48,7 @@
 
 .authorInfo {
   display: flex;
+  min-width: 140px;
 }
 
 .authorContainer {
@@ -91,13 +93,10 @@
     text-overflow: ellipsis;
   }
 
-  .headContainer {
-    width: 60%;
-  }
-
   .authorInfo {
     flex-flow: column;
     align-items: flex-end;
+    min-width: 75px;
   }
 
   .authorContainer {

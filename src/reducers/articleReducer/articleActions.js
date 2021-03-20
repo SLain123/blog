@@ -8,4 +8,4 @@ export const changeCreateEditStatus = (status) => ({ type: 'CHANGE_CREATE_OR_EDI
 
 export const changeIsUserEditStatus = (status) => ({ type: 'CHANGE_IS_USER_EDIT_STATUS', status });
 
-export const changeDisplayModalSatatus = (status) => ({ type: 'CHANGE_DISPLAY_MODAL_STATUS', status });
+export const changeDisplayModalStatus = (status) => ({ type: 'CHANGE_DISPLAY_MODAL_STATUS', status });

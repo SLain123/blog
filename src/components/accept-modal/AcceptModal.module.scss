@@ -66,3 +66,28 @@
   color: #fff;
   border: none;
 }
+
+@media (max-width: 1223px) {
+  .modalContainer {
+    top: 0;
+    left: -245px;
+
+    &::before {
+      top: 8px;
+      left: 240px;
+      border: 8px solid transparent;
+      border-left: 8px solid #fff;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .modalContainer {
+    top: 0;
+    left: -120px;
+
+    &::before {
+      display: none;
+    }
+  }
+}

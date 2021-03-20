@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { removeArticle } from '../../service/ArticleService';
-import { changeCreateEditStatus, changeDisplayModalSatatus } from '../../reducers/articleReducer/articleActions';
+import { changeCreateEditStatus, changeDisplayModalStatus } from '../../reducers/articleReducer/articleActions';
 
 import alarmSvg from './al.svg';
 import classes from './AcceptModal.module.scss';
@@ -31,7 +31,7 @@ const AcceptModal = () => {
           type="button"
           className={`${classes.btn} ${classes.no}`}
           onClick={() => {
-            dispatch(changeDisplayModalSatatus(false));
+            dispatch(changeDisplayModalStatus(false));
           }}
         >
           No
@@ -40,7 +40,7 @@ const AcceptModal = () => {
           type="button"
           className={`${classes.btn} ${classes.yes}`}
           onClick={() => {
-            dispatch(changeDisplayModalSatatus(false));
+            dispatch(changeDisplayModalStatus(false));
             removeArticle(content.slug, userData.token).then((res) => {
               if (!res.error) {
                 dispatch(changeCreateEditStatus(true));

@@ -173,3 +173,34 @@ $add-color: #1890ff;
     color: #fff;
   }
 }
+
+@media (max-width: 767px) {
+  .formContainer {
+    padding: 20px 5px;
+  }
+
+  .tagList {
+    width: 300px;
+  }
+
+  .string {
+    width: 95%;
+  }
+
+  .input {
+    margin-right: 10px;
+    width: 185px;
+  }
+
+  .add {
+    position: relative;
+    margin-top: 10px;
+    max-width: 200px;
+    padding: 7px 71px;
+  }
+
+  .delete {
+    margin-right: 0;
+    padding: 7px 15px;
+  }
+}

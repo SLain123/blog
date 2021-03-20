@@ -12,7 +12,7 @@ import {
   makeLoadStatus,
   changeIsUserEditStatus,
   changeCreateEditStatus,
-  changeDisplayModalSatatus,
+  changeDisplayModalStatus,
 } from '../../reducers/articleReducer/articleActions';
 import Tags from '../../components/tags';
 import Spinner from '../../components/spinner';
@@ -42,7 +42,7 @@ const ArticlePage = ({ match }) => {
       <button
         type="button"
         className={`${classes.deleteBtn} ${classes.controlBtn}`}
-        onClick={() => dispatch(changeDisplayModalSatatus(true))}
+        onClick={() => dispatch(changeDisplayModalStatus(true))}
       >
         Delete
       </button>
@@ -59,6 +59,7 @@ const ArticlePage = ({ match }) => {
   useEffect(() => {
     dispatch(makeLoadStatus());
     dispatch(changeIsUserEditStatus(false));
+    dispatch(changeDisplayModalStatus(false));
     getArticleService(articleUrl)
       .then((data) => dispatch(getArticle(data)))
       .catch((error) => dispatch(failDownloadArticle(error.message)));
