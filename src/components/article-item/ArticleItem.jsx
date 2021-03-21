@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import Tags from '../tags';
-
-import like from './like.svg';
+import Like from '../like';
 
 import classes from './ArticleItem.module.scss';
 
-const ArticleItem = ({ title, author, createdAt, description, favoritesCount, slug, tagList }) => {
+const ArticleItem = ({ title, author, createdAt, description, favoritesCount, slug, tagList, favorited }) => {
   let { image, username } = author;
 
   if (image === '' || image === null) {
@@ -27,10 +26,7 @@ const ArticleItem = ({ title, author, createdAt, description, favoritesCount, sl
             <Link to={`/articles/${slug}`} className={classes.title}>
               {title}
             </Link>
-            <div className={classes.like}>
-              <img src={like} alt="like" width="16" height="15" className={classes.likePic} />
-              <span className={classes.likeCount}>{favoritesCount}</span>
-            </div>
+            <Like favorited={favorited} favoritesCount={favoritesCount} slug={slug} />
           </div>
           <Tags tags={tagList} />
         </div>
@@ -58,6 +54,7 @@ ArticleItem.propTypes = {
   favoritesCount: PropTypes.number.isRequired,
   slug: PropTypes.string.isRequired,
   tagList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  favorited: PropTypes.bool.isRequired,
 };
 
 export default ArticleItem;

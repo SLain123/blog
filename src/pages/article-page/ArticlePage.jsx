@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useCallback, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import gfm from 'remark-gfm';
-import { getArticleService, editArticle } from '../../service/ArticleService';
+
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getArticle,
   failDownloadArticle,
@@ -14,12 +15,15 @@ import {
   changeCreateEditStatus,
   changeDisplayModalStatus,
 } from '../../reducers/articleReducer/articleActions';
+
+import getToken from '../../service/StorageService';
+import { getArticleService, editArticleService } from '../../service/ArticleService';
+
 import Tags from '../../components/tags';
 import Spinner from '../../components/spinner';
 import ErrorMessage from '../../components/error-message';
 import AcceptModal from '../../components/accept-modal';
-
-import like from '../../components/article-item/like.svg';
+import Like from '../../components/like';
 
 import classes from './ArticlePage.module.scss';
 
@@ -28,15 +32,14 @@ const ArticlePage = ({ match }) => {
   const articleContent = useSelector((state) => state.article.content);
   const onLoad = useSelector((state) => state.article.onLoad);
   const onFail = useSelector((state) => state.article.onFail);
-  const articleUrl = match.params.slug;
-  const avatar = 'https://static.productionready.io/images/smiley-cyrus.jpg';
-  const content = useSelector((state) => state.article.content);
   const createEditStatus = useSelector((state) => state.article.createEditStatus);
-
   const isUserEdit = useSelector((state) => state.article.isUserEdit);
   const isDisplayModal = useSelector((state) => state.article.displayModal);
 
-  const userData = JSON.parse(localStorage.getItem('user'));
+  const token = getToken();
+  const { slug } = match.params;
+  const avatar = 'https://static.productionready.io/images/smiley-cyrus.jpg';
+
   const controlBlock = (
     <div className={classes.controlBlock}>
       <button
@@ -46,7 +49,7 @@ const ArticlePage = ({ match }) => {
       >
         Delete
       </button>
-      <Link to={`/articles/${articleUrl}/edit`} className={`${classes.editBtn} ${classes.controlBtn}`}>
+      <Link to={`/articles/${slug}/edit`} className={`${classes.editBtn} ${classes.controlBtn}`}>
         Edit
       </Link>
       {isDisplayModal ? <AcceptModal /> : null}
@@ -56,20 +59,24 @@ const ArticlePage = ({ match }) => {
 
   // Загрузка данных single article;
 
-  useEffect(() => {
+  const downloadArticle = useCallback(() => {
     dispatch(makeLoadStatus());
     dispatch(changeIsUserEditStatus(false));
     dispatch(changeDisplayModalStatus(false));
-    getArticleService(articleUrl)
+    getArticleService(slug)
       .then((data) => dispatch(getArticle(data)))
       .catch((error) => dispatch(failDownloadArticle(error.message)));
-  }, [dispatch, articleUrl]);
+  }, [slug, dispatch]);
+
+  useEffect(() => {
+    downloadArticle();
+  }, [downloadArticle]);
 
   //  Проверка способности текущего пользователя редактировать статью;
 
   useEffect(() => {
-    if (userData !== null && content) {
-      editArticle(articleUrl, userData.token, content)
+    if (token && articleContent) {
+      editArticleService(slug, articleContent)
         .then((res) => {
           if (res.article) {
             dispatch(changeIsUserEditStatus(true));
@@ -77,7 +84,9 @@ const ArticlePage = ({ match }) => {
         })
         .catch(() => dispatch(changeIsUserEditStatus(false)));
     }
-  }, [articleUrl, userData, content, dispatch]);
+  }, [slug, token, articleContent, dispatch]);
+
+  // Редирект если на страницу article при удачном удалении статьи;
 
   if (createEditStatus) {
     setTimeout(() => {
@@ -95,7 +104,7 @@ const ArticlePage = ({ match }) => {
   }
 
   if (articleContent !== null) {
-    const { title, body, author, createdAt, description, favoritesCount, tagList } = articleContent;
+    const { title, body, author, createdAt, description, favoritesCount, tagList, favorited } = articleContent;
     const { image, username } = author;
 
     return (
@@ -104,10 +113,7 @@ const ArticlePage = ({ match }) => {
           <div className={classes.headContainer}>
             <div className={classes.headInfo}>
               <span className={classes.title}>{title}</span>
-              <div className={classes.like}>
-                <img src={like} alt="like" width="16" height="15" className={classes.likePic} />
-                <span className={classes.likeCount}>{favoritesCount}</span>
-              </div>
+              <Like favorited={favorited} favoritesCount={favoritesCount} slug={slug} />
             </div>
             <Tags tags={tagList} />
             <p className={classes.description}>{description}</p>

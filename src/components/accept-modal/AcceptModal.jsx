@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { removeArticle } from '../../service/ArticleService';
+import { removeArticleService } from '../../service/ArticleService';
 import { changeCreateEditStatus, changeDisplayModalStatus } from '../../reducers/articleReducer/articleActions';
 
 import alarmSvg from './al.svg';
@@ -11,7 +11,6 @@ const AcceptModal = () => {
   const dispatch = useDispatch();
   const createEditStatus = useSelector((state) => state.article.createEditStatus);
   const content = useSelector((state) => state.article.content);
-  const userData = JSON.parse(localStorage.getItem('user'));
 
   if (createEditStatus) {
     setTimeout(() => {
@@ -41,7 +40,7 @@ const AcceptModal = () => {
           className={`${classes.btn} ${classes.yes}`}
           onClick={() => {
             dispatch(changeDisplayModalStatus(false));
-            removeArticle(content.slug, userData.token).then((res) => {
+            removeArticleService(content.slug).then((res) => {
               if (!res.error) {
                 dispatch(changeCreateEditStatus(true));
               }

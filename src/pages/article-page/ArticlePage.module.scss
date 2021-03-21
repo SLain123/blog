@@ -26,24 +26,6 @@ body {
   justify-content: space-between;
 }
 
-.like {
-  margin-left: 13px;
-  display: flex;
-  flex-flow: nowrap;
-  align-items: center;
-}
-
-.likePic {
-  margin-right: 5px;
-  cursor: pointer;
-}
-
-.likeCount {
-  font-size: 12px;
-  line-height: 22px;
-  color: rgba(0, 0, 0, 0.75);
-}
-
 .title {
   font-size: 20px;
   line-height: 28px;

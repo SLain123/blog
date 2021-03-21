@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import CreateEditForm from '../../components/create-edit-form';
-import { editArticle } from '../../service/ArticleService';
+import { editArticleService } from '../../service/ArticleService';
 import { changeCreateEditStatus } from '../../reducers/articleReducer/articleActions';
 
 const EditArticlePage = () => {
@@ -11,7 +11,6 @@ const EditArticlePage = () => {
   const createEditStatus = useSelector((state) => state.article.createEditStatus);
   const content = useSelector((state) => state.article.content);
   const { slug } = content;
-  const redirectUrl = `/articles/${slug}`;
 
   const edit = (data) => {
     const { tagList } = data;
@@ -22,9 +21,7 @@ const EditArticlePage = () => {
     }
     const body = { article: { ...data, tagList: newTagsList } };
 
-    const userData = JSON.parse(localStorage.getItem('user'));
-
-    editArticle(slug, userData.token, body).then((res) => {
+    editArticleService(slug, body).then((res) => {
       if (res.article) {
         dispatch(changeCreateEditStatus(true));
       }
@@ -37,7 +34,7 @@ const EditArticlePage = () => {
     setTimeout(() => {
       dispatch(changeCreateEditStatus(false));
     }, 500);
-    return <Redirect to={redirectUrl} />;
+    return <Redirect to="/articles" />;
   }
 
   return <CreateEditForm formTitle="Edit article" submitFunc={edit} {...content} />;

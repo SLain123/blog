@@ -12,6 +12,7 @@ import UserProfilePage from '../../pages/user-profile-page';
 import CreateArticlePage from '../../pages/create-article-page';
 import EditArticlePage from '../../pages/edit-article-page';
 import { successAuth, changeLoginStatus } from '../../reducers/userReducer/userActions';
+import getToken from '../../service/StorageService';
 
 import { getUserData } from '../../service/UserService';
 
@@ -23,13 +24,13 @@ const App = () => {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
 
-  // Проверяет наличие токена в LS и получает данные пользователя;
+  // Проверяет наличие токена в LS и получает данные пользователя => данные польз. и статус аутентификации в store;
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user.token) {
+    const token = getToken();
+    if (token) {
       dispatch(successAuth());
-      getUserData(user.token)
+      getUserData(token)
         .then((res) => {
           dispatch(successAuth(res.user));
           dispatch(changeLoginStatus(true));
