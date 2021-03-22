@@ -36,7 +36,7 @@ FormField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  errors: PropTypes.objectOf(PropTypes.string).isRequired,
+  errors: PropTypes.objectOf(PropTypes.object).isRequired,
   placeholder: PropTypes.string.isRequired,
   thisRef: PropTypes.func.isRequired,
   errorOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
