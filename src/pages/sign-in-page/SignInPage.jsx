@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAuth } from '../../service/UserService';
+import { getAuthService } from '../../service/UserService';
 import { changeAuthStatus, successAuth, changeLoginStatus } from '../../reducers/userReducer/userActions';
 import AuthRegForm from '../../components/auth-reg-form';
 import FormField from '../../components/form-field';
@@ -12,7 +12,7 @@ const SignInPage = () => {
 
   const { register, errors, handleSubmit } = useForm();
   const onSubmit = (data) =>
-    getAuth(data)
+    getAuthService(data)
       .then((res) => {
         if (res.errors) {
           dispatch(changeAuthStatus(res));

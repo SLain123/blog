@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
@@ -15,6 +14,7 @@ import {
   changeCreateEditStatus,
   changeDisplayModalStatus,
 } from '../../reducers/articleReducer/articleActions';
+import { changeFetchFeil } from '../../reducers/userReducer/userActions';
 
 import getToken from '../../service/StorageService';
 import { getArticleService, editArticleService } from '../../service/ArticleService';
@@ -82,7 +82,10 @@ const ArticlePage = ({ match }) => {
             dispatch(changeIsUserEditStatus(true));
           }
         })
-        .catch(() => dispatch(changeIsUserEditStatus(false)));
+        .catch(() => {
+          dispatch(changeFetchFeil(true));
+          dispatch(changeIsUserEditStatus(false));
+        });
     }
   }, [slug, token, articleContent, dispatch]);
 

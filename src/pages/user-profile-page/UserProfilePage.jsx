@@ -2,7 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Redirect } from 'react-router-dom';
-import { changeUserData } from '../../service/UserService';
+import { changeUserDataService } from '../../service/UserService';
+import getToken from '../../service/StorageService';
 import { changeEditStatus, successEditing } from '../../reducers/userReducer/userActions';
 import AuthRegForm from '../../components/auth-reg-form';
 import FormField from '../../components/form-field';
@@ -13,8 +14,8 @@ const UserProfilePage = () => {
 
   const { register, errors, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    const userInfoFromStorage = JSON.parse(localStorage.getItem('user'));
-    changeUserData(data, userInfoFromStorage.token)
+    const token = getToken();
+    changeUserDataService(data, token)
       .then((res) => {
         if (res.errors) {
           dispatch(changeEditStatus(res.errors));

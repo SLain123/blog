@@ -1,10 +1,9 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable arrow-body-style */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import classes from './FormField.module.scss';
 
-const FormField = ({ name, label, type, errors, placeholder, thisRef, errorOptions, value = '' }) => {
+const FormField = ({ name, label, type, errors, placeholder, thisRef, errorOptions, value }) => {
   const errorInputClass = `${classes.input} ${classes.errorInput}`;
 
   return (
@@ -31,6 +30,21 @@ const FormField = ({ name, label, type, errors, placeholder, thisRef, errorOptio
       )}
     </>
   );
+};
+
+FormField.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  errors: PropTypes.objectOf(PropTypes.string).isRequired,
+  placeholder: PropTypes.string.isRequired,
+  thisRef: PropTypes.func.isRequired,
+  errorOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  value: PropTypes.string,
+};
+
+FormField.defaultProps = {
+  value: '',
 };
 
 export default FormField;

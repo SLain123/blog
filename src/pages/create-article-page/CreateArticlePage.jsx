@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import CreateEditForm from '../../components/create-edit-form';
 import { createArticleService } from '../../service/ArticleService';
+import { changeFetchFeil } from '../../reducers/userReducer/userActions';
 import { changeCreateEditStatus } from '../../reducers/articleReducer/articleActions';
 import { changePage } from '../../reducers/listReducer/listActions';
 
@@ -23,10 +24,11 @@ const CreateArticlePage = () => {
       .then((res) => {
         if (res.article) {
           dispatch(changeCreateEditStatus(true));
+        } else {
+          dispatch(changeFetchFeil(true));
         }
-        return null;
       })
-      .catch((err) => console.log(err));
+      .catch(() => dispatch(changeFetchFeil(true)));
   };
 
   if (createEditStatus) {

@@ -1,6 +1,6 @@
 import { postRequest, getRequest } from './FetchService';
 
-export const getRegistration = ({ username, email, password }) => {
+export const getRegistrationService = ({ username, email, password }) => {
   const regData = {
     user: {
       username,
@@ -12,7 +12,7 @@ export const getRegistration = ({ username, email, password }) => {
   return postRequest('https://conduit.productionready.io/api/users', JSON.stringify(regData));
 };
 
-export const getAuth = ({ email, password }) => {
+export const getAuthService = ({ email, password }) => {
   const authData = {
     user: {
       email,
@@ -23,7 +23,7 @@ export const getAuth = ({ email, password }) => {
   return postRequest('https://conduit.productionready.io/api/users/login', JSON.stringify(authData));
 };
 
-export const getUserData = (token) => {
+export const getUserDataService = (token) => {
   const headers = {
     'Content-Type': 'application/json;charset=utf-8',
     Authorization: `Token ${token}`,
@@ -32,7 +32,7 @@ export const getUserData = (token) => {
   return getRequest('https://conduit.productionready.io/api/user', headers);
 };
 
-export const changeUserData = (body, token) => {
+export const changeUserDataService = (body, token) => {
   const headers = {
     'Content-Type': 'application/json;charset=utf-8',
     Authorization: `Token ${token}`,

@@ -17,15 +17,17 @@
   
     &:focus {
       outline: none;
-      border: #ff0707 1px solid;
-      border-radius: 100%;
+
+      .likePic {
+        stroke: black;
+      }
     }
   }
   
   .likePic {
     width: 16px;
     height: 15px;
-    fill: #ff0707;
+    fill: #FF0707;
   }
   
   .likeCount {

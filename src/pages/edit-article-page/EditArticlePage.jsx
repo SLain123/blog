@@ -1,9 +1,9 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import CreateEditForm from '../../components/create-edit-form';
 import { editArticleService } from '../../service/ArticleService';
+import { changeFetchFeil } from '../../reducers/userReducer/userActions';
 import { changeCreateEditStatus } from '../../reducers/articleReducer/articleActions';
 
 const EditArticlePage = () => {
@@ -21,13 +21,15 @@ const EditArticlePage = () => {
     }
     const body = { article: { ...data, tagList: newTagsList } };
 
-    editArticleService(slug, body).then((res) => {
-      if (res.article) {
-        dispatch(changeCreateEditStatus(true));
-      }
-
-      return null;
-    });
+    editArticleService(slug, body)
+      .then((res) => {
+        if (res.article) {
+          dispatch(changeCreateEditStatus(true));
+        } else {
+          dispatch(changeFetchFeil(true));
+        }
+      })
+      .catch(() => dispatch(changeFetchFeil(true)));
   };
 
   if (createEditStatus) {

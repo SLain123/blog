@@ -5,6 +5,7 @@ const initState = {
   userInfo: false,
   statusEdit: false,
   isLogin: false,
+  fetchFail: false,
 };
 
 const userReducer = (state = initState, action) => {
@@ -29,6 +30,9 @@ const userReducer = (state = initState, action) => {
     }
     case 'CHANGE_LOGIN_STATUS': {
       return { ...state, isLogin: action.status };
+    }
+    case 'CHANGE_FETCH_FEIL': {
+      return { ...state, fetchFail: action.status };
     }
 
     default:

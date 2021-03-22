@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import { getRegistration } from '../../service/UserService';
+import { getRegistrationService } from '../../service/UserService';
 import { changeRegStatus, successRegistration } from '../../reducers/userReducer/userActions';
 import AuthRegForm from '../../components/auth-reg-form';
 import FormField from '../../components/form-field';
@@ -16,7 +16,7 @@ const SignUpPage = () => {
 
   const { register, errors, handleSubmit, getValues } = useForm();
   const onSubmit = (data) =>
-    getRegistration(data)
+    getRegistrationService(data)
       .then((res) => {
         if (res.errors) {
           dispatch(changeRegStatus(res.errors));

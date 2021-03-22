@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { removeArticleService } from '../../service/ArticleService';
+import { changeFetchFeil } from '../../reducers/userReducer/userActions';
 import { changeCreateEditStatus, changeDisplayModalStatus } from '../../reducers/articleReducer/articleActions';
 
 import alarmSvg from './al.svg';
@@ -40,11 +41,15 @@ const AcceptModal = () => {
           className={`${classes.btn} ${classes.yes}`}
           onClick={() => {
             dispatch(changeDisplayModalStatus(false));
-            removeArticleService(content.slug).then((res) => {
-              if (!res.error) {
-                dispatch(changeCreateEditStatus(true));
-              }
-            });
+            removeArticleService(content.slug)
+              .then((res) => {
+                if (!res.error) {
+                  dispatch(changeCreateEditStatus(true));
+                } else {
+                  dispatch(changeFetchFeil(true));
+                }
+              })
+              .catch(() => dispatch(changeFetchFeil(true)));
           }}
         >
           Yes

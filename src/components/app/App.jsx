@@ -11,10 +11,11 @@ import SignUpPage from '../../pages/sign-up-page';
 import UserProfilePage from '../../pages/user-profile-page';
 import CreateArticlePage from '../../pages/create-article-page';
 import EditArticlePage from '../../pages/edit-article-page';
+import ModalFailWindow from '../modal-fail-window';
 import { successAuth, changeLoginStatus } from '../../reducers/userReducer/userActions';
 import getToken from '../../service/StorageService';
 
-import { getUserData } from '../../service/UserService';
+import { getUserDataService } from '../../service/UserService';
 
 import 'antd/dist/antd.css';
 
@@ -30,7 +31,7 @@ const App = () => {
     const token = getToken();
     if (token) {
       dispatch(successAuth());
-      getUserData(token)
+      getUserDataService(token)
         .then((res) => {
           dispatch(successAuth(res.user));
           dispatch(changeLoginStatus(true));
@@ -55,6 +56,7 @@ const App = () => {
           <Redirect path="*" to="/articles" />
         </Switch>
       </main>
+      <ModalFailWindow />
     </section>
   );
 };
