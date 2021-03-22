@@ -25,3 +25,7 @@ Runs eslint with fix.
 ### `npm run format`
 
 Runs prettier with formating code.
+
+Web on vercel:
+
+https://blog-slain123.vercel.app/
