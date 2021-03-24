@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import gfm from 'remark-gfm';
+import { useSpring, animated } from 'react-spring';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -40,8 +41,15 @@ const ArticlePage = ({ match }) => {
   const { slug } = match.params;
   const avatar = 'https://static.productionready.io/images/smiley-cyrus.jpg';
 
+  const positionAnimate = useSpring({
+    transform: 'scale(1)',
+    opacity: 1,
+    from: { transform: 'scale(0)', opacity: 0 },
+    config: { duration: 1300 },
+  });
+
   const controlBlock = (
-    <div className={classes.controlBlock}>
+    <animated.div className={classes.controlBlock} style={positionAnimate}>
       <button
         type="button"
         className={`${classes.deleteBtn} ${classes.controlBtn}`}
@@ -53,7 +61,7 @@ const ArticlePage = ({ match }) => {
         Edit
       </Link>
       {isDisplayModal ? <AcceptModal /> : null}
-    </div>
+    </animated.div>
   );
   const isControl = isUserEdit ? controlBlock : null;
 

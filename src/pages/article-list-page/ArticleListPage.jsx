@@ -40,8 +40,8 @@ const ArticleListPage = () => {
 
   return (
     <ul className={classes.list}>
-      {articles.map((article) => (
-        <ArticleItem {...article} key={uniqueId('art_')} />
+      {articles.map((article, index) => (
+        <ArticleItem {...article} key={uniqueId('art_')} index={index} />
       ))}
       <Pagination
         size="small"
