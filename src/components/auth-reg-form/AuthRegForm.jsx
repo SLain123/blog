@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSpring, animated } from 'react-spring';
 import FormFooter from '../form-footer';
 
 import classes from './AuthRegForm.module.scss';
@@ -37,19 +38,27 @@ const genStatusBlock = (status) => {
   );
 };
 
-const AuthRegForm = ({ title, status, onSubmit, children, btnLabel, footer }) => (
-  <div className={classes.formContainer}>
-    <p className={classes.header}>{title}</p>
-    {genStatusBlock(status)}
-    <form className={classes.formBody} onSubmit={onSubmit}>
-      {children}
-      <button type="submit" className={classes.btn}>
-        {btnLabel}
-      </button>
-    </form>
-    {footer && <FormFooter {...footer} />}
-  </div>
-);
+const AuthRegForm = ({ title, status, onSubmit, children, btnLabel, footer }) => {
+  const opacityAnimate = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+    config: { duration: 500 },
+  });
+
+  return (
+    <animated.div style={opacityAnimate} className={classes.formContainer}>
+      <p className={classes.header}>{title}</p>
+      {genStatusBlock(status)}
+      <form className={classes.formBody} onSubmit={onSubmit}>
+        {children}
+        <button type="submit" className={classes.btn}>
+          {btnLabel}
+        </button>
+      </form>
+      {footer && <FormFooter {...footer} />}
+    </animated.div>
+  );
+};
 
 AuthRegForm.propTypes = {
   title: PropTypes.string.isRequired,

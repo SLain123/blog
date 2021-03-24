@@ -63,6 +63,9 @@
   line-height: 28px;
   color: rgba(0, 0, 0, 0.85);
   text-align: end;
+  max-width: 130px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .date {

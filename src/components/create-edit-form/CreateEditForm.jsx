@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { PropTypes } from 'prop-types';
+import { useSpring, animated } from 'react-spring';
 import FormField from '../form-field';
 
 import classes from './CreateEditForm.module.scss';
@@ -33,85 +34,93 @@ const CreateEditForm = ({ formTitle, tagList, submitFunc, title, description, bo
     correctTagList.forEach((tag) => append({ tag }));
   }, [append, correctTagList]);
 
+  const opacityAnimate = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+    config: { duration: 500 },
+  });
+
   return (
-    <div className={classes.formContainer}>
-      <p className={classes.header}>{formTitle}</p>
-      <form className={classes.formBody} onSubmit={handleSubmit(onSubmit)}>
-        <FormField
-          label="Title"
-          name="title"
-          type="input"
-          placeholder="Title"
-          thisRef={register({ required: true })}
-          errors={errors}
-          errorOptions={[{ target: 'required', message: 'This is a required field' }]}
-          value={title}
-        />
-        <FormField
-          label="Short description"
-          name="description"
-          type="input"
-          placeholder="Title"
-          thisRef={register({ required: true })}
-          errors={errors}
-          errorOptions={[{ target: 'required', message: 'This is a required field' }]}
-          value={description}
-        />
-        <label className={classes.label} htmlFor="text">
-          Text
-        </label>
-        <textarea
-          placeholder="Text"
-          className={errors.body?.type ? `${classes.errorAria} ${classes.textaria}` : classes.textaria}
-          id="text"
-          name="body"
-          ref={register({ required: true })}
-          defaultValue={body}
-        />
-        {errors.body?.type === 'required' && <span className={classes.errorMessage}>This is a required field</span>}
-        <div className={classes.tagBlock}>
-          <p className={classes.title}>Tags</p>
-          <ul className={classes.tagList} ref={listRef}>
-            {fields.map((item, index) => (
-              <li key={item.id} className={classes.string}>
-                <label className={classes.hide} htmlFor="tag">
-                  for tag
-                </label>
-                <input
-                  type="input"
-                  placeholder="Tag"
-                  id="tag"
-                  name={`tagList[${index}].tag`}
-                  ref={register()}
-                  className={classes.input}
-                  defaultValue={innerTagList[index]}
-                />
-                <button
-                  type="button"
-                  className={`${classes.delete} ${classes.tagBtn}`}
-                  onClick={() => {
-                    const inputsCount = Array.from(listRef.current.children).length;
-                    clearTagList(index, setInnerTagList);
-                    remove(index);
-                    if (inputsCount === 1) {
-                      append({ tag: 'tag' });
-                    }
-                  }}
-                >
-                  Delete
-                </button>
-              </li>
-            ))}
-          </ul>
-          <button type="button" className={`${classes.add} ${classes.tagBtn}`} onClick={() => append({ tag: 'tag' })}>
-            Add tag
+    <animated.div style={opacityAnimate}>
+      <div className={classes.formContainer}>
+        <p className={classes.header}>{formTitle}</p>
+        <form className={classes.formBody} onSubmit={handleSubmit(onSubmit)}>
+          <FormField
+            label="Title"
+            name="title"
+            type="input"
+            placeholder="Title"
+            thisRef={register({ required: true })}
+            errors={errors}
+            errorOptions={[{ target: 'required', message: 'This is a required field' }]}
+            value={title}
+          />
+          <FormField
+            label="Short description"
+            name="description"
+            type="input"
+            placeholder="Title"
+            thisRef={register({ required: true })}
+            errors={errors}
+            errorOptions={[{ target: 'required', message: 'This is a required field' }]}
+            value={description}
+          />
+          <label className={classes.label} htmlFor="text">
+            Text
+          </label>
+          <textarea
+            placeholder="Text"
+            className={errors.body?.type ? `${classes.errorAria} ${classes.textaria}` : classes.textaria}
+            id="text"
+            name="body"
+            ref={register({ required: true })}
+            defaultValue={body}
+          />
+          {errors.body?.type === 'required' && <span className={classes.errorMessage}>This is a required field</span>}
+          <div className={classes.tagBlock}>
+            <p className={classes.title}>Tags</p>
+            <ul className={classes.tagList} ref={listRef}>
+              {fields.map((item, index) => (
+                <li key={item.id} className={classes.string}>
+                  <label className={classes.hide} htmlFor="tag">
+                    for tag
+                  </label>
+                  <input
+                    type="input"
+                    placeholder="Tag"
+                    id="tag"
+                    name={`tagList[${index}].tag`}
+                    ref={register()}
+                    className={classes.input}
+                    defaultValue={innerTagList[index]}
+                  />
+                  <button
+                    type="button"
+                    className={`${classes.delete} ${classes.tagBtn}`}
+                    onClick={() => {
+                      const inputsCount = Array.from(listRef.current.children).length;
+                      clearTagList(index, setInnerTagList);
+                      remove(index);
+                      if (inputsCount === 1) {
+                        append({ tag: 'tag' });
+                      }
+                    }}
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <button type="button" className={`${classes.add} ${classes.tagBtn}`} onClick={() => append({ tag: 'tag' })}>
+              Add tag
+            </button>
+          </div>
+          <button type="submit" className={classes.btn}>
+            Send
           </button>
-        </div>
-        <button type="submit" className={classes.btn}>
-          Send
-        </button>
-      </form>
-    </div>
+        </form>
+      </div>
+    </animated.div>
   );
 };
 

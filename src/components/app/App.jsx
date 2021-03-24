@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSpring, animated } from 'react-spring';
 import PrivateRoute from '../private-route';
 import Header from '../header/Header';
 import ArticleListPage from '../../pages/article-list-page';
@@ -24,6 +25,12 @@ import classes from './App.module.scss';
 const App = () => {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
+
+  const opacityAnimate = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+    config: { duration: 500 },
+  });
 
   // Проверяет наличие токена в LS и получает данные пользователя => данные польз. и статус аутентификации в store;
 
