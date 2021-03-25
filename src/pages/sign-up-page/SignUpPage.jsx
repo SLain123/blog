@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRegistrationService } from '../../service/UserService';
-import { changeRegStatus, successRegistration } from '../../reducers/userReducer/userActions';
+import userActions from '../../reducers/userReducer/userActions';
 import AuthRegForm from '../../components/auth-reg-form';
 import FormField from '../../components/form-field';
 
@@ -19,21 +19,21 @@ const SignUpPage = () => {
     getRegistrationService(data)
       .then((res) => {
         if (res.errors) {
-          dispatch(changeRegStatus(res.errors));
+          dispatch(userActions.changeRegStatus(res.errors));
         } else {
-          dispatch(changeRegStatus('success'));
+          dispatch(userActions.changeRegStatus('success'));
           setTimeout(() => {
-            dispatch(changeRegStatus(false));
-            dispatch(successRegistration(true));
+            dispatch(userActions.changeRegStatus(false));
+            dispatch(userActions.successRegistration(true));
           }, 2500);
         }
       })
       .catch((error) => {
-        dispatch(changeRegStatus(error.message));
+        dispatch(userActions.changeRegStatus(error.message));
       });
 
   if (onSuccessReg) {
-    setTimeout(() => dispatch(successRegistration(false)), 500);
+    setTimeout(() => dispatch(userActions.successRegistration(false)), 500);
     return <Redirect to="/sign-in" />;
   }
 

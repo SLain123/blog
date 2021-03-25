@@ -4,7 +4,7 @@ import { Pagination } from 'antd';
 import { uniqueId } from 'lodash';
 import ArticleItem from '../../components/article-item';
 import { getArticleListService } from '../../service/ArticleService';
-import { changePage, getArticles, failDownloadArticles, setLoad } from '../../reducers/listReducer/listActions';
+import listActions from '../../reducers/listReducer/listActions';
 import Spinner from '../../components/spinner';
 import ErrorMessage from '../../components/error-message';
 
@@ -22,11 +22,11 @@ const ArticleListPage = () => {
   // Обновление списка статей;
 
   useEffect(() => {
-    dispatch(setLoad());
+    dispatch(listActions.setLoad());
     setTimeout(() => {
       getArticleListService(page)
-        .then((data) => dispatch(getArticles(data)))
-        .catch((error) => dispatch(failDownloadArticles(error.message)));
+        .then((data) => dispatch(listActions.getArticles(data)))
+        .catch((error) => dispatch(listActions.failDownloadArticles(error.message)));
     }, 1000);
   }, [dispatch, page]);
 
@@ -49,7 +49,7 @@ const ArticleListPage = () => {
         current={page}
         pageSize={5}
         showSizeChanger={false}
-        onChange={(pageNum) => dispatch(changePage(pageNum))}
+        onChange={(pageNum) => dispatch(listActions.changePage(pageNum))}
       />
     </ul>
   );

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Redirect } from 'react-router-dom';
 import { changeUserDataService } from '../../service/UserService';
 import LocalStorageService from '../../service/StorageService';
-import { changeEditStatus, successEditing } from '../../reducers/userReducer/userActions';
+import userActions from '../../reducers/userReducer/userActions';
 import AuthRegForm from '../../components/auth-reg-form';
 import FormField from '../../components/form-field';
 
@@ -19,20 +19,20 @@ const UserProfilePage = () => {
     changeUserDataService(data, token)
       .then((res) => {
         if (res.errors) {
-          dispatch(changeEditStatus(res.errors));
+          dispatch(userActions.changeEditStatus(res.errors));
         } else {
-          dispatch(changeEditStatus('success'));
-          dispatch(successEditing(res.user));
+          dispatch(userActions.changeEditStatus('success'));
+          dispatch(userActions.successEditing(res.user));
           localStorage.setItem('user', JSON.stringify(res.user));
 
           setTimeout(() => {
-            dispatch(changeEditStatus('redirect'));
-            dispatch(changeEditStatus(false));
+            dispatch(userActions.changeEditStatus('redirect'));
+            dispatch(userActions.changeEditStatus(false));
           }, 2500);
         }
       })
       .catch((error) => {
-        dispatch(changeEditStatus(error.message));
+        dispatch(userActions.changeEditStatus(error.message));
       });
   };
 

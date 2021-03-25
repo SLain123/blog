@@ -11,7 +11,7 @@ import UserProfilePage from '../../pages/user-profile-page';
 import CreateArticlePage from '../../pages/create-article-page';
 import EditArticlePage from '../../pages/edit-article-page';
 import ModalFailWindow from '../modal-fail-window';
-import { successAuth, changeLoginStatus } from '../../reducers/userReducer/userActions';
+import userActions from '../../reducers/userReducer/userActions';
 import LocalStorageService from '../../service/StorageService';
 
 import { getUserDataService } from '../../service/UserService';
@@ -29,11 +29,11 @@ const App = () => {
   useEffect(() => {
     const token = LocalStorageService.getToken();
     if (token) {
-      dispatch(successAuth());
+      dispatch(userActions.successAuth());
       getUserDataService(token)
         .then((res) => {
-          dispatch(successAuth(res.user));
-          dispatch(changeLoginStatus(true));
+          dispatch(userActions.successAuth(res.user));
+          dispatch(userActions.changeLoginStatus(true));
         })
         .catch(() => {
           localStorage.removeItem('user');

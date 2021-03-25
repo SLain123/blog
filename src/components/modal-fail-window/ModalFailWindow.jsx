@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSpring, animated } from 'react-spring';
-import { changeFetchFeil } from '../../reducers/userReducer/userActions';
+import userActions from '../../reducers/userReducer/userActions';
 
 import classes from './ModalFailWindow.module.scss';
 
@@ -17,7 +17,7 @@ const ModalFailWindow = () => {
   });
 
   if (fetchFail) {
-    setTimeout(() => dispatch(changeFetchFeil(false)), 3500);
+    setTimeout(() => dispatch(userActions.changeFetchFeil(false)), 3500);
   }
 
   return (

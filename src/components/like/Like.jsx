@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { putLikeService } from '../../service/ArticleService';
-import { changeFetchFeil } from '../../reducers/userReducer/userActions';
+import userActions from '../../reducers/userReducer/userActions';
 
 import classes from './Like.module.scss';
 
@@ -26,10 +26,10 @@ const Like = ({ favorited, favoritesCount, slug }) => {
                     setLike(true);
                     setLikeCount((num) => num + 1);
                   } else {
-                    dispatch(changeFetchFeil(true));
+                    dispatch(userActions.changeFetchFeil(true));
                   }
                 })
-                .catch(() => dispatch(changeFetchFeil(true)));
+                .catch(() => dispatch(userActions.changeFetchFeil(true)));
             } else {
               putLikeService(slug, false)
                 .then((res) => {
@@ -37,10 +37,10 @@ const Like = ({ favorited, favoritesCount, slug }) => {
                     setLike(false);
                     setLikeCount((num) => num - 1);
                   } else {
-                    dispatch(changeFetchFeil(true));
+                    dispatch(userActions.changeFetchFeil(true));
                   }
                 })
-                .catch(() => dispatch(changeFetchFeil(true)));
+                .catch(() => dispatch(userActions.changeFetchFeil(true)));
             }
           }
         }}

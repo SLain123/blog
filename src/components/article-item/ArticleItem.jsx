@@ -12,8 +12,8 @@ const ArticleItem = ({ title, author, createdAt, description, favoritesCount, sl
   const positionAnimate = useSpring({
     transform: 'translateX(0)',
     from: { transform: 'translateX(-270%)' },
-    config: { duration: 600 },
-    delay: index * 80,
+    config: { duration: 500 },
+    delay: index * 50,
   });
 
   let { image, username } = author;

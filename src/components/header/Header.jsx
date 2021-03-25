@@ -1,15 +1,15 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { successAuth, changeLoginStatus } from '../../reducers/userReducer/userActions';
+import userActions from '../../reducers/userReducer/userActions';
 
 import avatar from './avatar.png';
 import classes from './Header.module.scss';
 
 const logout = (dispatch) => {
   localStorage.removeItem('user');
-  dispatch(successAuth(false));
-  dispatch(changeLoginStatus(false));
+  dispatch(userActions.successAuth(false));
+  dispatch(userActions.changeLoginStatus(false));
 };
 
 function Header() {

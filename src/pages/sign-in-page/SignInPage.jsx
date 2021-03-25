@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAuthService } from '../../service/UserService';
-import { changeAuthStatus, successAuth, changeLoginStatus } from '../../reducers/userReducer/userActions';
+import userActions from '../../reducers/userReducer/userActions';
 import AuthRegForm from '../../components/auth-reg-form';
 import FormField from '../../components/form-field';
 
@@ -15,16 +15,16 @@ const SignInPage = () => {
     getAuthService(data)
       .then((res) => {
         if (res.errors) {
-          dispatch(changeAuthStatus(res));
+          dispatch(userActions.changeAuthStatus(res));
         } else {
-          dispatch(changeAuthStatus(false));
-          dispatch(successAuth(res.user));
+          dispatch(userActions.changeAuthStatus(false));
+          dispatch(userActions.successAuth(res.user));
           localStorage.setItem('user', JSON.stringify(res.user));
-          dispatch(changeLoginStatus(true));
+          dispatch(userActions.changeLoginStatus(true));
         }
       })
       .catch((error) => {
-        dispatch(changeAuthStatus(error.message));
+        dispatch(userActions.changeAuthStatus(error.message));
       });
 
   return (

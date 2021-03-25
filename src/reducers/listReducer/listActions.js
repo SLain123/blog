@@ -1,7 +1,11 @@
-export const setLoad = () => ({ type: 'SET_LOAD_STATUS' });
+const listActions = {
+  setLoad: () => ({ type: 'SET_LOAD_STATUS' }),
 
-export const getArticles = (data) => ({ type: 'GET_ARTICLE_LIST', data });
+  getArticles: (data) => ({ type: 'GET_ARTICLE_LIST', data }),
 
-export const changePage = (page) => ({ type: 'CHANGE_PAGE', page });
+  changePage: (page) => ({ type: 'CHANGE_PAGE', page }),
 
-export const failDownloadArticles = (error) => ({ type: 'FAIL_DOWNLOAD_LIST', error });
+  failDownloadArticles: (error) => ({ type: 'FAIL_DOWNLOAD_LIST', error }),
+};
+
+export default listActions;

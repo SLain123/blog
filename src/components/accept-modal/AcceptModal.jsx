@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { removeArticleService } from '../../service/ArticleService';
-import { changeFetchFeil } from '../../reducers/userReducer/userActions';
-import { changeCreateEditStatus, changeDisplayModalStatus } from '../../reducers/articleReducer/articleActions';
+import userActions from '../../reducers/userReducer/userActions';
+import articleActions from '../../reducers/articleReducer/articleActions';
 
 import alarmSvg from './al.svg';
 import classes from './AcceptModal.module.scss';
@@ -15,7 +15,7 @@ const AcceptModal = () => {
 
   if (createEditStatus) {
     setTimeout(() => {
-      dispatch(changeCreateEditStatus(false));
+      dispatch(articleActions.changeCreateEditStatus(false));
     }, 500);
     return <Redirect to="/articles" />;
   }
@@ -31,7 +31,7 @@ const AcceptModal = () => {
           type="button"
           className={`${classes.btn} ${classes.no}`}
           onClick={() => {
-            dispatch(changeDisplayModalStatus(false));
+            dispatch(articleActions.changeDisplayModalStatus(false));
           }}
         >
           No
@@ -40,16 +40,16 @@ const AcceptModal = () => {
           type="button"
           className={`${classes.btn} ${classes.yes}`}
           onClick={() => {
-            dispatch(changeDisplayModalStatus(false));
+            dispatch(articleActions.changeDisplayModalStatus(false));
             removeArticleService(content.slug)
               .then((res) => {
                 if (!res.error) {
-                  dispatch(changeCreateEditStatus(true));
+                  dispatch(articleActions.changeCreateEditStatus(true));
                 } else {
-                  dispatch(changeFetchFeil(true));
+                  dispatch(userActions.changeFetchFeil(true));
                 }
               })
-              .catch(() => dispatch(changeFetchFeil(true)));
+              .catch(() => dispatch(userActions.changeFetchFeil(true)));
           }}
         >
           Yes

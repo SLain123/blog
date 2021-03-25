@@ -7,15 +7,8 @@ import gfm from 'remark-gfm';
 import { useSpring, animated } from 'react-spring';
 
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getArticle,
-  failDownloadArticle,
-  makeLoadStatus,
-  changeIsUserEditStatus,
-  changeCreateEditStatus,
-  changeDisplayModalStatus,
-} from '../../reducers/articleReducer/articleActions';
-import { changeFetchFeil } from '../../reducers/userReducer/userActions';
+import articleActions from '../../reducers/articleReducer/articleActions';
+import userActions from '../../reducers/userReducer/userActions';
 
 import LocalStorageService from '../../service/StorageService';
 import { getArticleService, editArticleService } from '../../service/ArticleService';
@@ -53,7 +46,7 @@ const ArticlePage = ({ match }) => {
       <button
         type="button"
         className={`${classes.deleteBtn} ${classes.controlBtn}`}
-        onClick={() => dispatch(changeDisplayModalStatus(true))}
+        onClick={() => dispatch(articleActions.changeDisplayModalStatus(true))}
       >
         Delete
       </button>
@@ -68,12 +61,12 @@ const ArticlePage = ({ match }) => {
   // Загрузка данных single article;
 
   const downloadArticle = useCallback(() => {
-    dispatch(makeLoadStatus());
-    dispatch(changeIsUserEditStatus(false));
-    dispatch(changeDisplayModalStatus(false));
+    dispatch(articleActions.makeLoadStatus());
+    dispatch(articleActions.changeIsUserEditStatus(false));
+    dispatch(articleActions.changeDisplayModalStatus(false));
     getArticleService(slug)
-      .then((data) => dispatch(getArticle(data)))
-      .catch((error) => dispatch(failDownloadArticle(error.message)));
+      .then((data) => dispatch(articleActions.getArticle(data)))
+      .catch((error) => dispatch(articleActions.failDownloadArticle(error.message)));
   }, [slug, dispatch]);
 
   useEffect(() => {
@@ -87,12 +80,12 @@ const ArticlePage = ({ match }) => {
       editArticleService(slug, articleContent)
         .then((res) => {
           if (res.article) {
-            dispatch(changeIsUserEditStatus(true));
+            dispatch(articleActions.changeIsUserEditStatus(true));
           }
         })
         .catch(() => {
-          dispatch(changeFetchFeil(true));
-          dispatch(changeIsUserEditStatus(false));
+          dispatch(userActions.changeFetchFeil(true));
+          dispatch(articleActions.changeIsUserEditStatus(false));
         });
     }
   }, [slug, token, articleContent, dispatch]);
@@ -101,7 +94,7 @@ const ArticlePage = ({ match }) => {
 
   if (createEditStatus) {
     setTimeout(() => {
-      dispatch(changeCreateEditStatus(false));
+      dispatch(articleActions.changeCreateEditStatus(false));
     }, 500);
     return <Redirect to="/articles" />;
   }

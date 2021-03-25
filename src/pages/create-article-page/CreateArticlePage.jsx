@@ -4,9 +4,9 @@ import { Redirect } from 'react-router-dom';
 import CreateEditForm from '../../components/create-edit-form';
 import { createArticleService } from '../../service/ArticleService';
 import LocalStorageService from '../../service/StorageService';
-import { changeFetchFeil } from '../../reducers/userReducer/userActions';
-import { changeCreateEditStatus } from '../../reducers/articleReducer/articleActions';
-import { changePage } from '../../reducers/listReducer/listActions';
+import userActions from '../../reducers/userReducer/userActions';
+import articleActions from '../../reducers/articleReducer/articleActions';
+import listActions from '../../reducers/listReducer/listActions';
 
 const CreateArticlePage = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const CreateArticlePage = () => {
   const userInfo = LocalStorageService.getUserInfo();
 
   useEffect(() => {
-    dispatch(changePage(1));
+    dispatch(listActions.changePage(1));
   }, [dispatch]);
 
   const create = (data) => {
@@ -25,17 +25,17 @@ const CreateArticlePage = () => {
     createArticleService(body)
       .then((res) => {
         if (res.article) {
-          dispatch(changeCreateEditStatus(true));
+          dispatch(articleActions.changeCreateEditStatus(true));
         } else {
-          dispatch(changeFetchFeil(true));
+          dispatch(userActions.changeFetchFeil(true));
         }
       })
-      .catch(() => dispatch(changeFetchFeil(true)));
+      .catch(() => dispatch(userActions.changeFetchFeil(true)));
   };
 
   if (createEditStatus) {
     setTimeout(() => {
-      dispatch(changeCreateEditStatus(false));
+      dispatch(articleActions.changeCreateEditStatus(false));
     }, 500);
     return <Redirect to="/articles" />;
   }
