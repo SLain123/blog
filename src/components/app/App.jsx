@@ -8,8 +8,7 @@ import ArticlePage from '../../pages/article-page';
 import SignInPage from '../../pages/sign-in-page';
 import SignUpPage from '../../pages/sign-up-page';
 import UserProfilePage from '../../pages/user-profile-page';
-import CreateArticlePage from '../../pages/create-article-page';
-import EditArticlePage from '../../pages/edit-article-page';
+import CreateEditArticlePage from '../../pages/create-edit-article-page';
 import ModalFailWindow from '../modal-fail-window';
 import userActions from '../../reducers/userReducer/userActions';
 import LocalStorageService from '../../service/StorageService';
@@ -50,8 +49,8 @@ const App = () => {
           <PrivateRoute path="/sign-in" auth={!isLogin} component={SignInPage} link="/articles" />
           <PrivateRoute path="/sign-up" auth={!isLogin} component={SignUpPage} link="/profile" />
           <Route path="/profile" component={UserProfilePage} />
-          <Route path="/new-article" component={CreateArticlePage} />
-          <Route path="/articles/:slug/edit" component={EditArticlePage} />
+          <Route path="/new-article" component={CreateEditArticlePage} />
+          <Route path="/articles/:slug/edit" component={CreateEditArticlePage} />
           <Route path="/articles/:slug" component={ArticlePage} />
           <Route path="/articles" component={ArticleListPage} />
           <Route path="/" component={ArticleListPage} />
