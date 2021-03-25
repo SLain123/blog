@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import CreateEditForm from '../../components/create-edit-form';
 import { createArticleService } from '../../service/ArticleService';
+import LocalStorageService from '../../service/StorageService';
 import { changeFetchFeil } from '../../reducers/userReducer/userActions';
 import { changeCreateEditStatus } from '../../reducers/articleReducer/articleActions';
 import { changePage } from '../../reducers/listReducer/listActions';
@@ -10,6 +11,7 @@ import { changePage } from '../../reducers/listReducer/listActions';
 const CreateArticlePage = () => {
   const dispatch = useDispatch();
   const createEditStatus = useSelector((state) => state.article.createEditStatus);
+  const userInfo = LocalStorageService.getUserInfo();
 
   useEffect(() => {
     dispatch(changePage(1));
@@ -36,6 +38,10 @@ const CreateArticlePage = () => {
       dispatch(changeCreateEditStatus(false));
     }, 500);
     return <Redirect to="/articles" />;
+  }
+
+  if (userInfo === '') {
+    return <Redirect to="/sign-in" />;
   }
 
   return <CreateEditForm formTitle="Create new article" submitFunc={create} />;

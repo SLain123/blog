@@ -13,7 +13,7 @@ const PrivateRoute = ({ component: Component, auth, link, ...rest }) => {
 PrivateRoute.propTypes = {
   component: PropTypes.elementType.isRequired,
   link: PropTypes.string.isRequired,
-  auth: PropTypes.bool,
+  auth: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 PrivateRoute.defaultProps = {

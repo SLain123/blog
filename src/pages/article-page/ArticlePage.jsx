@@ -17,7 +17,7 @@ import {
 } from '../../reducers/articleReducer/articleActions';
 import { changeFetchFeil } from '../../reducers/userReducer/userActions';
 
-import getToken from '../../service/StorageService';
+import LocalStorageService from '../../service/StorageService';
 import { getArticleService, editArticleService } from '../../service/ArticleService';
 
 import Tags from '../../components/tags';
@@ -37,7 +37,7 @@ const ArticlePage = ({ match }) => {
   const isUserEdit = useSelector((state) => state.article.isUserEdit);
   const isDisplayModal = useSelector((state) => state.article.displayModal);
 
-  const token = getToken();
+  const token = LocalStorageService.getToken();
   const { slug } = match.params;
   const avatar = 'https://static.productionready.io/images/smiley-cyrus.jpg';
 

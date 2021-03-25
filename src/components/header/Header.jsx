@@ -49,7 +49,7 @@ function Header() {
 
   return (
     <header className={classes.header}>
-      <Link to="/articles" className={classes.logo}>
+      <Link to="/" className={classes.logo}>
         Realworld Blog
       </Link>
       {isLoginBlock}

@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
-import { Route, Switch, Redirect, Link } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSpring, animated } from 'react-spring';
 import PrivateRoute from '../private-route';
 import Header from '../header/Header';
 import ArticleListPage from '../../pages/article-list-page';
@@ -14,7 +12,7 @@ import CreateArticlePage from '../../pages/create-article-page';
 import EditArticlePage from '../../pages/edit-article-page';
 import ModalFailWindow from '../modal-fail-window';
 import { successAuth, changeLoginStatus } from '../../reducers/userReducer/userActions';
-import getToken from '../../service/StorageService';
+import LocalStorageService from '../../service/StorageService';
 
 import { getUserDataService } from '../../service/UserService';
 
@@ -26,16 +24,10 @@ const App = () => {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
 
-  const opacityAnimate = useSpring({
-    opacity: 1,
-    from: { opacity: 0 },
-    config: { duration: 500 },
-  });
-
   // Проверяет наличие токена в LS и получает данные пользователя => данные польз. и статус аутентификации в store;
 
   useEffect(() => {
-    const token = getToken();
+    const token = LocalStorageService.getToken();
     if (token) {
       dispatch(successAuth());
       getUserDataService(token)
@@ -43,7 +35,9 @@ const App = () => {
           dispatch(successAuth(res.user));
           dispatch(changeLoginStatus(true));
         })
-        .catch(() => localStorage.removeItem('user'));
+        .catch(() => {
+          localStorage.removeItem('user');
+        });
     }
   }, [dispatch]);
 
@@ -55,12 +49,12 @@ const App = () => {
         <Switch>
           <PrivateRoute path="/sign-in" auth={!isLogin} component={SignInPage} link="/articles" />
           <PrivateRoute path="/sign-up" auth={!isLogin} component={SignUpPage} link="/profile" />
-          <PrivateRoute path="/profile" auth={isLogin} component={UserProfilePage} link="/sign-in" />
-          <PrivateRoute path="/new-article" auth={isLogin} component={CreateArticlePage} link="/sign-in" />
-          <PrivateRoute path="/articles/:slug/edit" auth={isLogin} component={EditArticlePage} link="/sign-in" />
+          <Route path="/profile" component={UserProfilePage} />
+          <Route path="/new-article" component={CreateArticlePage} />
+          <Route path="/articles/:slug/edit" component={EditArticlePage} />
           <Route path="/articles/:slug" component={ArticlePage} />
           <Route path="/articles" component={ArticleListPage} />
-          <Redirect path="*" to="/articles" />
+          <Route path="/" component={ArticleListPage} />
         </Switch>
       </main>
       <ModalFailWindow />

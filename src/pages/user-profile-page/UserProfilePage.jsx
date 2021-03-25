@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Redirect } from 'react-router-dom';
 import { changeUserDataService } from '../../service/UserService';
-import getToken from '../../service/StorageService';
+import LocalStorageService from '../../service/StorageService';
 import { changeEditStatus, successEditing } from '../../reducers/userReducer/userActions';
 import AuthRegForm from '../../components/auth-reg-form';
 import FormField from '../../components/form-field';
@@ -11,10 +11,11 @@ import FormField from '../../components/form-field';
 const UserProfilePage = () => {
   const dispatch = useDispatch();
   const statusEdit = useSelector((state) => state.user.statusEdit);
+  const userInfo = LocalStorageService.getUserInfo();
 
   const { register, errors, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    const token = getToken();
+    const token = LocalStorageService.getToken();
     changeUserDataService(data, token)
       .then((res) => {
         if (res.errors) {
@@ -36,7 +37,11 @@ const UserProfilePage = () => {
   };
 
   if (statusEdit === 'redirect') {
-    return <Redirect to="/articles" />;
+    return <Redirect to="/" />;
+  }
+
+  if (userInfo === '') {
+    return <Redirect to="/sign-in" />;
   }
 
   return (

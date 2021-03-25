@@ -1,8 +1,8 @@
 import { getRequest, postRequest } from './FetchService';
-import getToken from './StorageService';
+import LocalStorageService from './StorageService';
 
 const getHeader = () => {
-  const token = getToken();
+  const token = LocalStorageService.getToken();
   const headers = {
     'Content-Type': 'application/json;charset=utf-8',
   };

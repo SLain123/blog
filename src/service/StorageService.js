@@ -1,9 +1,19 @@
-const getToken = () => {
-  const userData = JSON.parse(localStorage.getItem('user'));
-  if (userData !== null) {
-    return userData.token;
-  }
-  return false;
-};
+class LocalStorageService {
+  static getToken = () => {
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (userData !== null) {
+      return userData.token;
+    }
+    return false;
+  };
 
-export default getToken;
+  static getUserInfo = () => {
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (userData !== null) {
+      return userData;
+    }
+    return '';
+  };
+}
+
+export default LocalStorageService;
