@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Redirect } from 'react-router-dom';
@@ -12,28 +12,36 @@ const UserProfilePage = () => {
   const dispatch = useDispatch();
   const statusEdit = useSelector((state) => state.user.statusEdit);
   const userInfo = LocalStorageService.getUserInfo();
+  const [doubleControl, setDControl] = useState(true);
 
   const { register, errors, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    const token = LocalStorageService.getToken();
-    changeUserDataService(data, token)
-      .then((res) => {
-        if (res.errors) {
-          dispatch(userActions.changeEditStatus(res.errors));
-        } else {
-          dispatch(userActions.changeEditStatus('success'));
-          dispatch(userActions.successEditing(res.user));
-          localStorage.setItem('user', JSON.stringify(res.user));
+    if (doubleControl) {
+      const token = LocalStorageService.getToken();
 
-          setTimeout(() => {
-            dispatch(userActions.changeEditStatus('redirect'));
-            dispatch(userActions.changeEditStatus(false));
-          }, 2500);
-        }
-      })
-      .catch((error) => {
-        dispatch(userActions.changeEditStatus(error.message));
-      });
+      setDControl(false);
+      changeUserDataService(data, token)
+        .then((res) => {
+          if (res.errors) {
+            dispatch(userActions.changeEditStatus(res.errors));
+            setDControl(true);
+          } else {
+            dispatch(userActions.changeEditStatus('success'));
+            dispatch(userActions.successEditing(res.user));
+            localStorage.setItem('user', JSON.stringify(res.user));
+            setDControl(true);
+
+            setTimeout(() => {
+              dispatch(userActions.changeEditStatus('redirect'));
+              dispatch(userActions.changeEditStatus(false));
+            }, 2500);
+          }
+        })
+        .catch((error) => {
+          dispatch(userActions.changeEditStatus(error.message));
+          setDControl(true);
+        });
+    }
   };
 
   if (statusEdit === 'redirect') {

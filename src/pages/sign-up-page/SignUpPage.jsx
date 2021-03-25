@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,24 +13,32 @@ const SignUpPage = () => {
   const dispatch = useDispatch();
   const statusReg = useSelector((state) => state.user.statusReg);
   const onSuccessReg = useSelector((state) => state.user.onSuccessReg);
+  const [doubleControl, setDControl] = useState(true);
 
   const { register, errors, handleSubmit, getValues } = useForm();
-  const onSubmit = (data) =>
-    getRegistrationService(data)
-      .then((res) => {
-        if (res.errors) {
-          dispatch(userActions.changeRegStatus(res.errors));
-        } else {
-          dispatch(userActions.changeRegStatus('success'));
-          setTimeout(() => {
-            dispatch(userActions.changeRegStatus(false));
-            dispatch(userActions.successRegistration(true));
-          }, 2500);
-        }
-      })
-      .catch((error) => {
-        dispatch(userActions.changeRegStatus(error.message));
-      });
+  const onSubmit = (data) => {
+    if (doubleControl) {
+      setDControl(false);
+      getRegistrationService(data)
+        .then((res) => {
+          if (res.errors) {
+            dispatch(userActions.changeRegStatus(res.errors));
+            setDControl(true);
+          } else {
+            dispatch(userActions.changeRegStatus('success'));
+            setTimeout(() => {
+              dispatch(userActions.changeRegStatus(false));
+              dispatch(userActions.successRegistration(true));
+              setDControl(true);
+            }, 2500);
+          }
+        })
+        .catch((error) => {
+          dispatch(userActions.changeRegStatus(error.message));
+          setDControl(true);
+        });
+    }
+  };
 
   if (onSuccessReg) {
     setTimeout(() => dispatch(userActions.successRegistration(false)), 500);

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
+import { once } from 'lodash';
 import { getAuthService } from '../../service/UserService';
 import userActions from '../../reducers/userReducer/userActions';
 import AuthRegForm from '../../components/auth-reg-form';
@@ -9,23 +10,31 @@ import FormField from '../../components/form-field';
 const SignInPage = () => {
   const dispatch = useDispatch();
   const statusAuth = useSelector((state) => state.user.statusAuth);
+  const [doubleControl, setDControl] = useState(true);
 
   const { register, errors, handleSubmit } = useForm();
-  const onSubmit = (data) =>
-    getAuthService(data)
-      .then((res) => {
-        if (res.errors) {
-          dispatch(userActions.changeAuthStatus(res));
-        } else {
-          dispatch(userActions.changeAuthStatus(false));
-          dispatch(userActions.successAuth(res.user));
-          localStorage.setItem('user', JSON.stringify(res.user));
-          dispatch(userActions.changeLoginStatus(true));
-        }
-      })
-      .catch((error) => {
-        dispatch(userActions.changeAuthStatus(error.message));
-      });
+  const onSubmit = once((data) => {
+    if (doubleControl) {
+      setDControl(false);
+      getAuthService(data)
+        .then((res) => {
+          if (res.errors) {
+            dispatch(userActions.changeAuthStatus(res));
+            setDControl(true);
+          } else {
+            dispatch(userActions.changeAuthStatus(false));
+            dispatch(userActions.successAuth(res.user));
+            localStorage.setItem('user', JSON.stringify(res.user));
+            dispatch(userActions.changeLoginStatus(true));
+            setDControl(true);
+          }
+        })
+        .catch((error) => {
+          dispatch(userActions.changeAuthStatus(error.message));
+          setDControl(true);
+        });
+    }
+  });
 
   return (
     <AuthRegForm

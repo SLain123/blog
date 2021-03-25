@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { once } from 'lodash';
 import CreateEditForm from '../../components/create-edit-form';
 import { createArticleService, editArticleService } from '../../service/ArticleService';
 import LocalStorageService from '../../service/StorageService';
@@ -33,7 +34,7 @@ const CreateEditArticlePage = ({ match }) => {
   // Вариант формирования для create page ==================
 
   if (match.url === '/new-article') {
-    const create = (data) => {
+    const create = once((data) => {
       const { tagList } = data;
       const newTagsList = tagList.filter((item) => item.tag.match(/[\S]/) !== null).map(({ tag }) => tag);
       const body = { article: { ...data, tagList: newTagsList } };
@@ -47,7 +48,7 @@ const CreateEditArticlePage = ({ match }) => {
           }
         })
         .catch(() => dispatch(userActions.changeFetchFeil(true)));
-    };
+    });
 
     return <CreateEditForm formTitle="Create new article" submitFunc={create} />;
   }
@@ -60,7 +61,7 @@ const CreateEditArticlePage = ({ match }) => {
     slug = content.slug;
   }
 
-  const edit = (data) => {
+  const edit = once((data) => {
     const { tagList } = data;
     let newTagsList = tagList.filter((item) => item.tag.match(/[\S]/) !== null).map(({ tag }) => tag);
 
@@ -78,7 +79,7 @@ const CreateEditArticlePage = ({ match }) => {
         }
       })
       .catch(() => dispatch(userActions.changeFetchFeil(true)));
-  };
+  });
 
   return <CreateEditForm formTitle="Edit article" submitFunc={edit} {...content} />;
 };
