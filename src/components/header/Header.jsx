@@ -49,10 +49,12 @@ function Header() {
 
   return (
     <header className={classes.header}>
-      <Link to="/" className={classes.logo}>
-        Realworld Blog
-      </Link>
-      {isLoginBlock}
+      <div className={classes.container}>
+        <Link to="/" className={classes.logo}>
+          Realworld Blog
+        </Link>
+        {isLoginBlock}
+      </div>
     </header>
   );
 }

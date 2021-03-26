@@ -52,6 +52,8 @@ const UserProfilePage = () => {
     return <Redirect to="/sign-in" />;
   }
 
+  const { username, email, image } = userInfo;
+
   return (
     <AuthRegForm title="Edit Profile" onSubmit={handleSubmit(onSubmit)} btnLabel="Save" status={statusEdit}>
       <FormField
@@ -66,6 +68,7 @@ const UserProfilePage = () => {
           { target: 'maxLength', message: 'Your password needs to be no more 20 characters.' },
           { target: 'minLength', message: 'Your username needs to be at least 3 characters.' },
         ]}
+        value={username}
       />
       <FormField
         label="Email address"
@@ -81,6 +84,7 @@ const UserProfilePage = () => {
           { target: 'required', message: 'This is a required field' },
           { target: 'pattern', message: 'You need specify a valid email address' },
         ]}
+        value={email}
       />
       <FormField
         label="New password"
@@ -101,10 +105,11 @@ const UserProfilePage = () => {
         type="input"
         placeholder="Avatar image"
         thisRef={register({
-          pattern: /^(http|https):\/\/[^ "]+$/,
+          pattern: /^(https?:\/\/)?([da-z.-]+)\.([a-z.]{2,6})([/\w.-?=\-%_&]*)*\/?$/,
         })}
         errors={errors}
         errorOptions={[{ target: 'pattern', message: 'You need specify a valid URL for image' }]}
+        value={image}
       />
     </AuthRegForm>
   );

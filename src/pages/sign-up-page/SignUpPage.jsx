@@ -117,7 +117,6 @@ const SignUpPage = () => {
           className={classes.checkbox}
           ref={register({ required: true })}
           name="agree"
-          defaultChecked
         />
         <label
           className={errors.agree?.type === 'required' ? `${classes.label} ${classes.errorLabel}` : classes.label}

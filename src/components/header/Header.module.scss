@@ -15,6 +15,14 @@ $active-btn: #52c41a;
   }
 }
 
+.container {
+  width: 1000px;
+  display: flex;
+  margin: 16px auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .logo {
   font-size: 18px;
   line-height: 28px;
