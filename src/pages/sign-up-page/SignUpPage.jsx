@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import { getRegistrationService } from '../../service/UserService';
+import { getRegistrationService } from '../../service/UsersService';
 import userActions from '../../reducers/userReducer/userActions';
 import AuthRegForm from '../../components/auth-reg-form';
 import FormField from '../../components/form-field';

@@ -25,15 +25,6 @@ export const getAuthService = ({ email, password }) => {
   return postRequest(`${apiUrl}users/login`, JSON.stringify(authData));
 };
 
-export const changeUserDataService = (body, token) => {
-  const headers = {
-    'Content-Type': 'application/json;charset=utf-8',
-    Authorization: `Token ${token}`,
-  };
-
-  return postRequest(`${apiUrl}user`, JSON.stringify(body), headers, 'PUT');
-};
-
 export const getUserDataService = (token) => {
   const headers = {
     'Content-Type': 'application/json;charset=utf-8',
@@ -41,4 +32,13 @@ export const getUserDataService = (token) => {
   };
 
   return getRequest(`${apiUrl}user`, headers);
+};
+
+export const changeUserDataService = (body, token) => {
+  const headers = {
+    'Content-Type': 'application/json;charset=utf-8',
+    Authorization: `Token ${token}`,
+  };
+
+  return postRequest(`${apiUrl}user`, JSON.stringify(body), headers, 'PUT');
 };

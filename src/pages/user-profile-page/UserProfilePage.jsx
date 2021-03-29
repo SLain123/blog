@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Redirect } from 'react-router-dom';
-import { changeUserDataService } from '../../service/UserService';
+import { changeUserDataService } from '../../service/UsersService';
 import LocalStorageService from '../../service/StorageService';
 import userActions from '../../reducers/userReducer/userActions';
 import AuthRegForm from '../../components/auth-reg-form';

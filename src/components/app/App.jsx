@@ -13,7 +13,7 @@ import ModalFailWindow from '../modal-fail-window';
 import userActions from '../../reducers/userReducer/userActions';
 import LocalStorageService from '../../service/StorageService';
 
-import { getUserDataService } from '../../service/UserService';
+import { getUserDataService } from '../../service/UsersService';
 
 import 'antd/dist/antd.css';
 
