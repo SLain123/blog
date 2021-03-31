@@ -105,7 +105,7 @@ const UserProfilePage = () => {
         type="input"
         placeholder="Avatar image"
         thisRef={register({
-          pattern: /^(https?:\/\/)?([da-z.-]+)\.([a-z.]{2,6})([/\w.-?=\-%_&]*)*\/?$/,
+          pattern: /^(https?:\/\/)+([da-z.-]+)\.([a-z.]{2,6})([/\w.-?=\-%_&]*)*\/?$/,
         })}
         errors={errors}
         errorOptions={[{ target: 'pattern', message: 'You need specify a valid URL for image' }]}

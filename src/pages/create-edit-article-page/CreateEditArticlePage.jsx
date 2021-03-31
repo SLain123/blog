@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { once } from 'lodash';
 import CreateEditForm from '../../components/create-edit-form';
-import { createArticleService, editArticleService } from '../../service/ArticleService';
+import { createArticleService, editArticleService, getArticleService } from '../../service/ArticleService';
 import LocalStorageService from '../../service/StorageService';
 import userActions from '../../reducers/userReducer/userActions';
 import articleActions from '../../reducers/articleReducer/articleActions';
@@ -50,7 +50,7 @@ const CreateEditArticlePage = ({ match }) => {
         .catch(() => dispatch(userActions.changeFetchFeil(true)));
     });
 
-    return <CreateEditForm formTitle="Create new article" submitFunc={create} />;
+    return <CreateEditForm formTitle="Create new article" submitFunc={create} reset />;
   }
 
   // Вариант формирования для edit page ==================
@@ -59,6 +59,15 @@ const CreateEditArticlePage = ({ match }) => {
 
   if (content) {
     slug = content.slug;
+  } else {
+    getArticleService(match.params.slug)
+      .then((data) => {
+        dispatch(articleActions.getArticle(data));
+        if (data.author.username !== userInfo.username) {
+          dispatch(articleActions.changeCreateEditStatus(true));
+        }
+      })
+      .catch((error) => dispatch(articleActions.failDownloadArticle(error.message)));
   }
 
   const edit = once((data) => {

@@ -15,12 +15,12 @@ const clearTagList = (index, setInnerTagList) => {
   });
 };
 
-const CreateEditForm = ({ formTitle, tagList, submitFunc, title, description, body }) => {
+const CreateEditForm = ({ formTitle, tagList, submitFunc, title, description, body, reset }) => {
   const correctTagList = useMemo(() => (tagList.length < 1 ? [''] : tagList), [tagList]);
   const listRef = useRef();
   const [innerTagList, setInnerTagList] = useState(correctTagList);
 
-  const { register, errors, handleSubmit, control } = useForm();
+  const { register, errors, handleSubmit, control, setValue } = useForm();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'tagList',
@@ -29,6 +29,16 @@ const CreateEditForm = ({ formTitle, tagList, submitFunc, title, description, bo
   const onSubmit = (data) => {
     submitFunc(data);
   };
+
+  useEffect(() => {
+    if (reset) {
+      setValue('title', '');
+      setValue('description', '');
+      setValue('body', '');
+      remove();
+      setInnerTagList(['']);
+    }
+  }, [reset, setValue, remove]);
 
   useEffect(() => {
     correctTagList.forEach((tag) => append({ tag }));
@@ -54,6 +64,7 @@ const CreateEditForm = ({ formTitle, tagList, submitFunc, title, description, bo
             errors={errors}
             errorOptions={[{ target: 'required', message: 'This is a required field' }]}
             value={title}
+            rese
           />
           <FormField
             label="Short description"
@@ -131,6 +142,7 @@ CreateEditForm.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   body: PropTypes.string,
+  reset: PropTypes.bool,
 };
 
 CreateEditForm.defaultProps = {
@@ -138,6 +150,7 @@ CreateEditForm.defaultProps = {
   title: '',
   description: '',
   body: '',
+  reset: false,
 };
 
 export default CreateEditForm;
