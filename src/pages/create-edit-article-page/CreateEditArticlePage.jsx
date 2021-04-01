@@ -9,12 +9,14 @@ import LocalStorageService from '../../service/StorageService';
 import userActions from '../../reducers/userReducer/userActions';
 import articleActions from '../../reducers/articleReducer/articleActions';
 import listActions from '../../reducers/listReducer/listActions';
+import Spinner from '../../components/spinner';
 
 const CreateEditArticlePage = ({ match }) => {
   const dispatch = useDispatch();
   const createEditStatus = useSelector((state) => state.article.createEditStatus);
   const content = useSelector((state) => state.article.content);
   const userInfo = LocalStorageService.getUserInfo();
+  const onLoad = useSelector((state) => state.article.onLoad);
 
   useEffect(() => {
     dispatch(listActions.changePage(1));
@@ -60,14 +62,19 @@ const CreateEditArticlePage = ({ match }) => {
   if (content) {
     slug = content.slug;
   } else {
+    dispatch(articleActions.makeLoadStatus());
     getArticleService(match.params.slug)
       .then((data) => {
-        dispatch(articleActions.getArticle(data));
         if (data.author.username !== userInfo.username) {
           dispatch(articleActions.changeCreateEditStatus(true));
         }
+        dispatch(articleActions.getArticle(data));
       })
       .catch((error) => dispatch(articleActions.failDownloadArticle(error.message)));
+  }
+
+  if (onLoad) {
+    return <Spinner />;
   }
 
   const edit = once((data) => {
